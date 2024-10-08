@@ -27,8 +27,7 @@ namespace MedorPracticalTest.WebAPI.Controllers.v1
 
                 // GET: api/v1/BitcoinPrice/GetHistoricalData
                 [HttpGet("GetHistoricalData")]
-                public async Task<IActionResult> GetHistoricalData(
-                        [FromQuery] DateTime startDate)
+                public async Task<IActionResult> GetHistoricalData([FromQuery] DateTime startDate)
                 {
                         var historicalBitcoinData = await Mediator.Send(new GetHistoricalBitcoinPriceRequest
                         {

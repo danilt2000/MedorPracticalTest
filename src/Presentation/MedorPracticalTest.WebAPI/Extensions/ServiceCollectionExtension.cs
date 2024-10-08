@@ -1,11 +1,11 @@
 ﻿using System.Reflection;
 using MedorPracticalTest.Application;
+using MedorPracticalTest.WebAPI.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 
 namespace MedorPracticalTest.WebAPI.Extensions
 {
-
         /// <summary>
         /// Extension for registering dependencies
         /// </summary>
@@ -17,19 +17,13 @@ namespace MedorPracticalTest.WebAPI.Extensions
                 /// <param name="services">Service collection</param>
                 /// <param name="configuration">Configuration</param>
                 /// <returns>ServiceCollection</returns>
-                public static IServiceCollection AddServices(this IServiceCollection services,
-                        IConfiguration configuration)
+                public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
                 {
-                        //services.AddDatabaseContext(configuration);//Todo uncomment and process
                         services.AddApplicationServices();
-                        //services.AddRepositories();//Todo uncomment and process
-                        //services.AddSwaggerGen(options =>//Todo uncomment and process
-                        //{
-                        //        var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                        //        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                        //        options.IncludeXmlComments(xmlPath);
-                        //});
-                        //services.ConfigureOptions<SwaggerConfiguration>();
+
+                        services.AddSwaggerGen(_ => { });
+
+                        services.ConfigureOptions<SwaggerConfiguration>();
 
                         return services;
                 }

@@ -19,4 +19,8 @@
     <ProjectReference Include="..\..\DataFetching\MedorPracticalTest.CnbExchangeService\MedorPracticalTest.CnbExchangeService.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Requests\Bitcoins\Commands\" />
+  </ItemGroup>
+
 </Project>
