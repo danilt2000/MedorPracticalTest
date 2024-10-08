@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.8.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.8.0" />
+    <PackageReference Include="MediatR" Version="12.1.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\DataFetching\MedorPracticalTest.BitcoinPriceService\MedorPracticalTest.BitcoinPriceService.csproj" />
+    <ProjectReference Include="..\..\DataFetching\MedorPracticalTest.CnbExchangeService.Abstractions\MedorPracticalTest.CnbExchangeService.Abstractions.csproj" />
+    <ProjectReference Include="..\..\DataFetching\MedorPracticalTest.CnbExchangeService\MedorPracticalTest.CnbExchangeService.csproj" />
+  </ItemGroup>
+
+</Project>

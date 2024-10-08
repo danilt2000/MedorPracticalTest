@@ -1,0 +1,97 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedorPracticalTest.WebAPI", "src\Presentation\MedorPracticalTest.WebAPI\MedorPracticalTest.WebAPI.csproj", "{DCDDC9A6-8BCA-4C20-A743-3D23FF12E714}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AC5601AD-A069-4713-A6DF-A0AC49199CD5} = {AC5601AD-A069-4713-A6DF-A0AC49199CD5}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{93BD3F0E-2A37-49EF-85CC-3055CD36F923}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{A181C51F-4F58-4192-A3A8-56EB251250F9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{3C8256E6-157B-4FBC-92AA-0D3B88878E16}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{963F888C-F273-4E4E-9721-AD23BE5952BB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{367898E0-8713-469D-B95C-6DA767ECCA51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedorPracticalTest.Application", "src\Application\MedorPracticalTest.Application\MedorPracticalTest.Application.csproj", "{AC5601AD-A069-4713-A6DF-A0AC49199CD5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedorPracticalTest.Persistence", "src\Infrastructure\MedorPracticalTest.Persistence\MedorPracticalTest.Persistence.csproj", "{33EAA579-524D-449D-BB8D-3E5AA8CD2D30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedorPracticalTest.Domain", "src\Domain\MedorPracticalTest.Domain\MedorPracticalTest.Domain.csproj", "{17ABAEFC-7315-418A-BCB7-E93F402C1ABF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataFetching", "DataFetching", "{21E2F5C8-FA07-4C9E-B0E7-D637E0351E36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedorPracticalTest.BitcoinPriceService", "src\DataFetching\MedorPracticalTest.BitcoinPriceService\MedorPracticalTest.BitcoinPriceService.csproj", "{760FCBB0-F5B0-4F6B-88EE-6AE25CAFB112}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedorPracticalTest.BitcoinPriceService.Abstractions", "src\DataFetching\MedorPracticalTest.BitcoinPriceService.Abstractions\MedorPracticalTest.BitcoinPriceService.Abstractions.csproj", "{2823D87B-8974-4B75-8874-36411B0F1D43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedorPracticalTest.CnbExchangeService", "src\DataFetching\MedorPracticalTest.CnbExchangeService\MedorPracticalTest.CnbExchangeService.csproj", "{042590FD-5EEC-465F-8A4B-226DC58A4BA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedorPracticalTest.CnbExchangeService.Abstractions", "src\DataFetching\MedorPracticalTest.CnbExchangeService.Abstractions\MedorPracticalTest.CnbExchangeService.Abstractions.csproj", "{E1342138-BAD8-4F5C-8DEC-BD62BD90389F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DCDDC9A6-8BCA-4C20-A743-3D23FF12E714}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCDDC9A6-8BCA-4C20-A743-3D23FF12E714}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCDDC9A6-8BCA-4C20-A743-3D23FF12E714}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCDDC9A6-8BCA-4C20-A743-3D23FF12E714}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC5601AD-A069-4713-A6DF-A0AC49199CD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC5601AD-A069-4713-A6DF-A0AC49199CD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC5601AD-A069-4713-A6DF-A0AC49199CD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC5601AD-A069-4713-A6DF-A0AC49199CD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33EAA579-524D-449D-BB8D-3E5AA8CD2D30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33EAA579-524D-449D-BB8D-3E5AA8CD2D30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33EAA579-524D-449D-BB8D-3E5AA8CD2D30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33EAA579-524D-449D-BB8D-3E5AA8CD2D30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17ABAEFC-7315-418A-BCB7-E93F402C1ABF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17ABAEFC-7315-418A-BCB7-E93F402C1ABF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17ABAEFC-7315-418A-BCB7-E93F402C1ABF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17ABAEFC-7315-418A-BCB7-E93F402C1ABF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{760FCBB0-F5B0-4F6B-88EE-6AE25CAFB112}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{760FCBB0-F5B0-4F6B-88EE-6AE25CAFB112}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{760FCBB0-F5B0-4F6B-88EE-6AE25CAFB112}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{760FCBB0-F5B0-4F6B-88EE-6AE25CAFB112}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2823D87B-8974-4B75-8874-36411B0F1D43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2823D87B-8974-4B75-8874-36411B0F1D43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2823D87B-8974-4B75-8874-36411B0F1D43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2823D87B-8974-4B75-8874-36411B0F1D43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{042590FD-5EEC-465F-8A4B-226DC58A4BA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{042590FD-5EEC-465F-8A4B-226DC58A4BA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{042590FD-5EEC-465F-8A4B-226DC58A4BA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{042590FD-5EEC-465F-8A4B-226DC58A4BA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1342138-BAD8-4F5C-8DEC-BD62BD90389F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1342138-BAD8-4F5C-8DEC-BD62BD90389F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1342138-BAD8-4F5C-8DEC-BD62BD90389F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1342138-BAD8-4F5C-8DEC-BD62BD90389F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DCDDC9A6-8BCA-4C20-A743-3D23FF12E714} = {A181C51F-4F58-4192-A3A8-56EB251250F9}
+		{A181C51F-4F58-4192-A3A8-56EB251250F9} = {93BD3F0E-2A37-49EF-85CC-3055CD36F923}
+		{3C8256E6-157B-4FBC-92AA-0D3B88878E16} = {93BD3F0E-2A37-49EF-85CC-3055CD36F923}
+		{963F888C-F273-4E4E-9721-AD23BE5952BB} = {93BD3F0E-2A37-49EF-85CC-3055CD36F923}
+		{367898E0-8713-469D-B95C-6DA767ECCA51} = {93BD3F0E-2A37-49EF-85CC-3055CD36F923}
+		{AC5601AD-A069-4713-A6DF-A0AC49199CD5} = {3C8256E6-157B-4FBC-92AA-0D3B88878E16}
+		{33EAA579-524D-449D-BB8D-3E5AA8CD2D30} = {367898E0-8713-469D-B95C-6DA767ECCA51}
+		{17ABAEFC-7315-418A-BCB7-E93F402C1ABF} = {963F888C-F273-4E4E-9721-AD23BE5952BB}
+		{21E2F5C8-FA07-4C9E-B0E7-D637E0351E36} = {93BD3F0E-2A37-49EF-85CC-3055CD36F923}
+		{760FCBB0-F5B0-4F6B-88EE-6AE25CAFB112} = {21E2F5C8-FA07-4C9E-B0E7-D637E0351E36}
+		{2823D87B-8974-4B75-8874-36411B0F1D43} = {21E2F5C8-FA07-4C9E-B0E7-D637E0351E36}
+		{042590FD-5EEC-465F-8A4B-226DC58A4BA8} = {21E2F5C8-FA07-4C9E-B0E7-D637E0351E36}
+		{E1342138-BAD8-4F5C-8DEC-BD62BD90389F} = {21E2F5C8-FA07-4C9E-B0E7-D637E0351E36}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CFBD5F85-68E6-4C45-B6F9-854D1A8E8DF8}
+	EndGlobalSection
+EndGlobal
