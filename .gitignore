@@ -361,3 +361,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/src/Presentation/MedorPracticalTest.WebAPI/appsettings.json
