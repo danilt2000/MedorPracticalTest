@@ -14,7 +14,7 @@ namespace MedorPracticalTest.Persistence.Repositories
                         _connectionString = connectionString;
                 }
 
-                public async Task SaveBitcoinDataAsync(Bitcoin bitcoin)
+                public async Task SaveBitcoinAsync(Bitcoin bitcoin)
                 {
                         await using var connection = new SqlConnection(_connectionString);
                         await using var command = new SqlCommand("dbo.SaveBitcoinData", connection);
@@ -29,7 +29,7 @@ namespace MedorPracticalTest.Persistence.Repositories
                         await command.ExecuteNonQueryAsync();
                 }
 
-                public async Task<IEnumerable<Bitcoin>> GetSavedBitcoinsAsync()
+                public async Task<IEnumerable<Bitcoin>> GetBitcoinsAsync()
                 {
                         var bitcoins = new List<Bitcoin>();
 
@@ -66,7 +66,7 @@ namespace MedorPracticalTest.Persistence.Repositories
                         await command.ExecuteNonQueryAsync();
                 }
 
-                public async Task DeleteBitcoinDataAsync(int id)
+                public async Task DeleteBitcoinAsync(int id)
                 {
                         await using var connection = new SqlConnection(_connectionString);
                         await using var command = new SqlCommand("dbo.DeleteBitcoinData", connection);

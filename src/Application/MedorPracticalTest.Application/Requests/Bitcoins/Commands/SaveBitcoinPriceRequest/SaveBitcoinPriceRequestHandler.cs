@@ -24,7 +24,7 @@ namespace MedorPracticalTest.Application.Requests.Bitcoins.Commands.SaveBitcoinP
                                 note: request.Note
                         );
 
-                        await _repository.SaveBitcoinDataAsync(bitcoin);
+                        await _repository.SaveBitcoinAsync(bitcoin);
                 }
         }
 }

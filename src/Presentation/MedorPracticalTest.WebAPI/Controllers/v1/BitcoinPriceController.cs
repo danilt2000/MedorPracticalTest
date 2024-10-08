@@ -1,5 +1,5 @@
-﻿using Azure.Core;
-using MediatR;
+﻿using MediatR;
+using MedorPracticalTest.Application.Requests.Bitcoins.Commands.DeleteBitcoinPriceRequest;
 using MedorPracticalTest.Application.Requests.Bitcoins.Commands.SaveBitcoinPriceRequest;
 using MedorPracticalTest.Application.Requests.Bitcoins.Commands.UpdateBitcoinNoteRequest;
 using MedorPracticalTest.Application.Requests.Bitcoins.Queries.GetCurrentBitcoinPriceRequest;
@@ -41,15 +41,6 @@ namespace MedorPracticalTest.WebAPI.Controllers.v1
                         return Ok(historicalBitcoinData);
                 }
 
-                // POST: api/BitcoinPrice/SaveLiveData
-                [HttpPost("SaveLiveData")]
-                public async Task<IActionResult> SaveLiveData([FromBody] SaveBitcoinPriceRequest request)
-                {
-                        await Mediator.Send(request);
-
-                        return Ok();
-                }
-
                 // GET: api/BitcoinPrice/GetSavedData
                 [HttpGet("GetSavedData")]
                 public async Task<IActionResult> GetSavedData()
@@ -57,6 +48,15 @@ namespace MedorPracticalTest.WebAPI.Controllers.v1
                         var bitcoins = await Mediator.Send(new GetSavedBitcoinsRequest());
 
                         return Ok(bitcoins);
+                }
+
+                // POST: api/BitcoinPrice/SaveLiveData
+                [HttpPost("SaveLiveData")]
+                public async Task<IActionResult> SaveLiveData([FromBody] SaveBitcoinPriceRequest request)
+                {
+                        await Mediator.Send(request);
+
+                        return Ok();
                 }
 
                 // PUT: api/BitcoinPrice/UpdateSavedData
@@ -70,20 +70,11 @@ namespace MedorPracticalTest.WebAPI.Controllers.v1
 
                 // DELETE: api/BitcoinPrice/DeleteSavedData
                 [HttpDelete("DeleteSavedData")]
-                public IActionResult DeleteSavedData(/* parameters */)
+                public async Task<IActionResult> DeleteSavedData([FromBody] DeleteBitcoinPriceRequest request)
                 {
-                        // Method to delete selected saved data from the database
-                        // Implementation here
-                        return Ok();
-                }
+                        await Mediator.Send(request);
 
-                // GET: api/BitcoinPrice/GetBitcoinPriceHistory
-                [HttpGet("GetBitcoinPriceHistory")]
-                public IActionResult GetBitcoinPriceHistory()
-                {
-                        // Method to get the history of Bitcoin prices for both table and graph views
-                        // Implementation here
-                        return Ok(/* history data */);
+                        return Ok();
                 }
         }
 }

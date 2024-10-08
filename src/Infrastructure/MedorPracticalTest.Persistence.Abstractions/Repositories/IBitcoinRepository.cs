@@ -4,11 +4,11 @@ namespace MedorPracticalTest.Persistence.Abstractions.Repositories
 {
         public interface IBitcoinRepository
         {
-                Task SaveBitcoinDataAsync(Bitcoin bitcoin);
+                Task SaveBitcoinAsync(Bitcoin bitcoin);
 
-                Task<IEnumerable<Bitcoin>> GetSavedBitcoinsAsync();
+                Task<IEnumerable<Bitcoin>> GetBitcoinsAsync();
 
-                Task DeleteBitcoinDataAsync(int id);
+                Task DeleteBitcoinAsync(int id);
 
                 Task UpdateBitcoinNoteAsync(int id, string note);
         }

@@ -15,7 +15,7 @@ namespace MedorPracticalTest.Application.Requests.Bitcoins.Queries.GetSavedBitco
 
                 public async Task<IEnumerable<Bitcoin>> Handle(GetSavedBitcoinsRequest request, CancellationToken cancellationToken)
                 {
-                        var bitcoins = await _repository.GetSavedBitcoinsAsync();
+                        var bitcoins = await _repository.GetBitcoinsAsync();
 
                         return bitcoins;
                 }
