@@ -1,5 +1,6 @@
 ﻿using MedorPracticalTest.BitcoinPriceService.Abstractions.Services;
 using MedorPracticalTest.Domain.Entities.Bitcoin;
+using System.Globalization;
 using System.Text.Json;
 
 namespace MedorPracticalTest.BitcoinPriceService.Services
@@ -50,38 +51,58 @@ namespace MedorPracticalTest.BitcoinPriceService.Services
                 public async Task<IEnumerable<Bitcoin>> GetHistoricalBitcoinPriceAsync(DateTime startDateTime)
                 {
                         var endDateTime = DateTime.UtcNow;
-                        var endTimestamp = new DateTimeOffset(endDateTime).ToUnixTimeSeconds();
-                        var startTimestamp = new DateTimeOffset(startDateTime).ToUnixTimeSeconds();
+                        var endTimestamp = new DateTimeOffset(endDateTime).ToUnixTimeMilliseconds();
+                        var startTimestamp = new DateTimeOffset(startDateTime).ToUnixTimeMilliseconds();
 
                         var bitcoinPrices = new List<Bitcoin>();
+                        
+                        //Todo write comments why binance api was used instead of coindesk
+                        var usdApiUrl = $"https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=5m&startTime={startTimestamp}&endTime={endTimestamp}";
+                        var eurApiUrl = $"https://api.binance.com/api/v3/klines?symbol=BTCEUR&interval=5m&startTime={startTimestamp}&endTime={endTimestamp}";
 
-                        var apiUrl = $"https://api.coingecko.com/api/v3/coins/bitcoin/market_chart/range?vs_currency=eur&from={startTimestamp}&to={endTimestamp}";
+                        var usdResponse = await _httpClient.GetAsync(usdApiUrl);
+                        usdResponse.EnsureSuccessStatusCode();
+                        var usdContent = await usdResponse.Content.ReadAsStringAsync();
+                        var usdJsonDocument = JsonDocument.Parse(usdContent);
 
-                        var response = await _httpClient.GetAsync(apiUrl);
-                        response.EnsureSuccessStatusCode();
+                        var eurResponse = await _httpClient.GetAsync(eurApiUrl);
+                        eurResponse.EnsureSuccessStatusCode();
+                        var eurContent = await eurResponse.Content.ReadAsStringAsync();
+                        var eurJsonDocument = JsonDocument.Parse(eurContent);
 
-                        var content = await response.Content.ReadAsStringAsync();
-                        var jsonDocument = JsonDocument.Parse(content);
-                        var pricesArray = jsonDocument.RootElement.GetProperty("prices");
+                        var usdPricesArray = usdJsonDocument.RootElement.EnumerateArray();
+                        var eurPricesArray = eurJsonDocument.RootElement.EnumerateArray();
 
-                        foreach (var priceEntry in pricesArray.EnumerateArray())
+                        var usdEnumerator = usdPricesArray.GetEnumerator();
+                        var eurEnumerator = eurPricesArray.GetEnumerator();
+
+                        while (usdEnumerator.MoveNext() && eurEnumerator.MoveNext())
                         {
-                                var timestamp = priceEntry[0].GetInt64();
-                                var priceEur = priceEntry[1].GetDecimal();
+                                var usdPriceEntry = usdEnumerator.Current;
+                                var eurPriceEntry = eurEnumerator.Current;
+
+                                var timestamp = usdPriceEntry[0].GetInt64();
+
+                                var usdClosePrice = decimal.Parse(usdPriceEntry[4].GetString()!, CultureInfo.InvariantCulture);
+                                var eurClosePrice = decimal.Parse(eurPriceEntry[4].GetString()!, CultureInfo.InvariantCulture);
 
                                 var priceDateTime = DateTimeOffset.FromUnixTimeMilliseconds(timestamp).UtcDateTime;
 
                                 var bitcoin = new Bitcoin(
                                     id: 0,
                                     priceDateTime,
-                                    0m,//Todo complete usd putting 
-                                    priceEur,
+                                    usdClosePrice,
+                                    eurClosePrice,
                                     0m,
                                     String.Empty
                                 );
 
                                 bitcoinPrices.Add(bitcoin);
                         }
+
+                        usdEnumerator.Dispose();
+
+                        eurEnumerator.Dispose();
 
                         return bitcoinPrices;
                 }

@@ -2,6 +2,6 @@
 {
         public interface ICnbExchangeService
         {
-                Task<decimal> GetEurCzkExchangeRateAsync(DateTime date);
+                Task<Dictionary<DateTime, decimal>> GetEurCzkExchangeRatesForDatesAsync(IEnumerable<DateTime> dates);
         }
 }
