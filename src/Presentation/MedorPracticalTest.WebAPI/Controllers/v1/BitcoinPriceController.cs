@@ -1,6 +1,10 @@
-﻿using MediatR;
+﻿using Azure.Core;
+using MediatR;
+using MedorPracticalTest.Application.Requests.Bitcoins.Commands.SaveBitcoinPriceRequest;
+using MedorPracticalTest.Application.Requests.Bitcoins.Commands.UpdateBitcoinNoteRequest;
 using MedorPracticalTest.Application.Requests.Bitcoins.Queries.GetCurrentBitcoinPriceRequest;
 using MedorPracticalTest.Application.Requests.Bitcoins.Queries.GetHistoricalBitcoinPriceRequest;
+using MedorPracticalTest.Application.Requests.Bitcoins.Queries.GetSavedBitcoinsRequest;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MedorPracticalTest.WebAPI.Controllers.v1
@@ -39,28 +43,28 @@ namespace MedorPracticalTest.WebAPI.Controllers.v1
 
                 // POST: api/BitcoinPrice/SaveLiveData
                 [HttpPost("SaveLiveData")]
-                public IActionResult SaveLiveData(/* parameters */)
+                public async Task<IActionResult> SaveLiveData([FromBody] SaveBitcoinPriceRequest request)
                 {
-                        // Method to save the fetched live data into the database
-                        // Implementation here
+                        await Mediator.Send(request);
+
                         return Ok();
                 }
 
                 // GET: api/BitcoinPrice/GetSavedData
                 [HttpGet("GetSavedData")]
-                public IActionResult GetSavedData()
+                public async Task<IActionResult> GetSavedData()
                 {
-                        // Method to retrieve saved data from the database
-                        // Implementation here
-                        return Ok(/* saved data */);
+                        var bitcoins = await Mediator.Send(new GetSavedBitcoinsRequest());
+
+                        return Ok(bitcoins);
                 }
 
                 // PUT: api/BitcoinPrice/UpdateSavedData
-                [HttpPut("UpdateSavedData")]
-                public IActionResult UpdateSavedData(/* parameters */)
+                [HttpPatch("UpdateNote")]
+                public async Task<IActionResult> UpdateNote([FromBody] UpdateBitcoinNoteRequest request)
                 {
-                        // Method to update saved data (e.g., editing notes)
-                        // Implementation here
+                        await Mediator.Send(request);
+
                         return Ok();
                 }
 

@@ -6,7 +6,7 @@ namespace MedorPracticalTest.Persistence.Abstractions.Repositories
         {
                 Task SaveBitcoinDataAsync(Bitcoin bitcoin);
 
-                Task<IEnumerable<Bitcoin>> GetAllBitcoinsAsync();
+                Task<IEnumerable<Bitcoin>> GetSavedBitcoinsAsync();
 
                 Task DeleteBitcoinDataAsync(int id);
 

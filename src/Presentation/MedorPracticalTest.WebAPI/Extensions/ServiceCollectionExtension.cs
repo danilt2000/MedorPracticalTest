@@ -19,7 +19,7 @@ namespace MedorPracticalTest.WebAPI.Extensions
                 /// <returns>ServiceCollection</returns>
                 public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
                 {
-                        services.AddApplicationServices();
+                        services.AddApplicationServices(configuration);
 
                         services.AddSwaggerGen(_ => { });
 

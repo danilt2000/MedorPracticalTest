@@ -11,12 +11,14 @@
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.8.0" />
     <PackageReference Include="MediatR" Version="12.1.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\DataFetching\MedorPracticalTest.BitcoinPriceService\MedorPracticalTest.BitcoinPriceService.csproj" />
     <ProjectReference Include="..\..\DataFetching\MedorPracticalTest.CnbExchangeService.Abstractions\MedorPracticalTest.CnbExchangeService.Abstractions.csproj" />
     <ProjectReference Include="..\..\DataFetching\MedorPracticalTest.CnbExchangeService\MedorPracticalTest.CnbExchangeService.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\MedorPracticalTest.Persistence\MedorPracticalTest.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

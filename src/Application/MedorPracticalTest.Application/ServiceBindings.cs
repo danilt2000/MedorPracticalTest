@@ -1,17 +1,18 @@
-﻿using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
-using FluentValidation;
+﻿using FluentValidation;
+using MediatR;
 using MedorPracticalTest.Application.Extensions;
 using MedorPracticalTest.BitcoinPriceService;
-using MedorPracticalTest.Application.Requests.Bitcoins.Queries.GetCurrentBitcoinPriceRequest;
 using MedorPracticalTest.CnbExchangeService;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
+using MedorPracticalTest.Persistence;
 
 namespace MedorPracticalTest.Application
 {
         public static class ServiceBindings
         {
-                public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+                public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
                 {
                         services.AddBitcoinPriceServices();
 
@@ -24,6 +25,7 @@ namespace MedorPracticalTest.Application
                                 config.AddBehavior(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehaviour<,>));
                         });
 
+                        services.AddApplicationPersistence(configuration);
                         //services.AddMediatR(config =>
                         //{
                         //        config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());

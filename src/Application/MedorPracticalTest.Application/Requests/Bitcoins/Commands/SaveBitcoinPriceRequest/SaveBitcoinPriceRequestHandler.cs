@@ -1,19 +1,30 @@
 ﻿using MediatR;
+using MedorPracticalTest.Domain.Entities.Bitcoin;
+using MedorPracticalTest.Persistence.Abstractions.Repositories;
 
 namespace MedorPracticalTest.Application.Requests.Bitcoins.Commands.SaveBitcoinPriceRequest
 {
         public class SaveBitcoinPriceRequestHandler : IRequestHandler<SaveBitcoinPriceRequest>
         {
-                //private readonly IProductRepository _repository;
+                private readonly IBitcoinRepository _repository;
 
-                public SaveBitcoinPriceRequestHandler(/*IProductRepository repository*/)
+                public SaveBitcoinPriceRequestHandler(IBitcoinRepository repository)
                 {
-                        //_repository = repository;
+                        _repository = repository;
                 }
 
-                public Task Handle(SaveBitcoinPriceRequest request, CancellationToken cancellationToken)
+                public async Task Handle(SaveBitcoinPriceRequest request, CancellationToken cancellationToken)
                 {
-                        throw new NotImplementedException();
+                        var bitcoin = new Bitcoin(
+                                id: 0,
+                                timestamp: request.Timestamp,
+                                bitcoinPriceUSD: request.BitcoinPriceUSD,
+                                bitcoinPriceEUR: request.BitcoinPriceEUR,
+                                bitcoinPriceCZK: request.BitcoinPriceCZK,
+                                note: request.Note
+                        );
+
+                        await _repository.SaveBitcoinDataAsync(bitcoin);
                 }
         }
 }

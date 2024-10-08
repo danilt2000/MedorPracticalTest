@@ -6,14 +6,17 @@ namespace MedorPracticalTest.Application.Requests.Bitcoins.Commands.SaveBitcoinP
         public class SaveBitcoinPriceRequest : IRequest
         {
                 [Required]
-                public decimal BitcoinPriceUSD { get; private set; }
+                public decimal BitcoinPriceUSD { get; set; }
 
                 [Required]
-                public decimal BitcoinPriceEUR { get; private set; }
+                public decimal BitcoinPriceEUR { get; set; }
 
                 [Required]
-                public decimal BitcoinPriceCZK { get; private set; }
+                public decimal BitcoinPriceCZK { get; set; }
 
-                public string? Note { get; private set; }
+                [Required]
+                public DateTime Timestamp { get; set; }
+
+                public string? Note { get; set; }
         }
 }
