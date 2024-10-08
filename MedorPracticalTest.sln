@@ -18,21 +18,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{963F88
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{367898E0-8713-469D-B95C-6DA767ECCA51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedorPracticalTest.Application", "src\Application\MedorPracticalTest.Application\MedorPracticalTest.Application.csproj", "{AC5601AD-A069-4713-A6DF-A0AC49199CD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedorPracticalTest.Application", "src\Application\MedorPracticalTest.Application\MedorPracticalTest.Application.csproj", "{AC5601AD-A069-4713-A6DF-A0AC49199CD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedorPracticalTest.Persistence", "src\Infrastructure\MedorPracticalTest.Persistence\MedorPracticalTest.Persistence.csproj", "{33EAA579-524D-449D-BB8D-3E5AA8CD2D30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedorPracticalTest.Persistence", "src\Infrastructure\MedorPracticalTest.Persistence\MedorPracticalTest.Persistence.csproj", "{33EAA579-524D-449D-BB8D-3E5AA8CD2D30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedorPracticalTest.Domain", "src\Domain\MedorPracticalTest.Domain\MedorPracticalTest.Domain.csproj", "{17ABAEFC-7315-418A-BCB7-E93F402C1ABF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedorPracticalTest.Domain", "src\Domain\MedorPracticalTest.Domain\MedorPracticalTest.Domain.csproj", "{17ABAEFC-7315-418A-BCB7-E93F402C1ABF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataFetching", "DataFetching", "{21E2F5C8-FA07-4C9E-B0E7-D637E0351E36}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedorPracticalTest.BitcoinPriceService", "src\DataFetching\MedorPracticalTest.BitcoinPriceService\MedorPracticalTest.BitcoinPriceService.csproj", "{760FCBB0-F5B0-4F6B-88EE-6AE25CAFB112}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedorPracticalTest.BitcoinPriceService", "src\DataFetching\MedorPracticalTest.BitcoinPriceService\MedorPracticalTest.BitcoinPriceService.csproj", "{760FCBB0-F5B0-4F6B-88EE-6AE25CAFB112}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedorPracticalTest.BitcoinPriceService.Abstractions", "src\DataFetching\MedorPracticalTest.BitcoinPriceService.Abstractions\MedorPracticalTest.BitcoinPriceService.Abstractions.csproj", "{2823D87B-8974-4B75-8874-36411B0F1D43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedorPracticalTest.BitcoinPriceService.Abstractions", "src\DataFetching\MedorPracticalTest.BitcoinPriceService.Abstractions\MedorPracticalTest.BitcoinPriceService.Abstractions.csproj", "{2823D87B-8974-4B75-8874-36411B0F1D43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedorPracticalTest.CnbExchangeService", "src\DataFetching\MedorPracticalTest.CnbExchangeService\MedorPracticalTest.CnbExchangeService.csproj", "{042590FD-5EEC-465F-8A4B-226DC58A4BA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedorPracticalTest.CnbExchangeService", "src\DataFetching\MedorPracticalTest.CnbExchangeService\MedorPracticalTest.CnbExchangeService.csproj", "{042590FD-5EEC-465F-8A4B-226DC58A4BA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedorPracticalTest.CnbExchangeService.Abstractions", "src\DataFetching\MedorPracticalTest.CnbExchangeService.Abstractions\MedorPracticalTest.CnbExchangeService.Abstractions.csproj", "{E1342138-BAD8-4F5C-8DEC-BD62BD90389F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedorPracticalTest.CnbExchangeService.Abstractions", "src\DataFetching\MedorPracticalTest.CnbExchangeService.Abstractions\MedorPracticalTest.CnbExchangeService.Abstractions.csproj", "{E1342138-BAD8-4F5C-8DEC-BD62BD90389F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedorPracticalTest.Persistence.Abstractions", "src\Infrastructure\MedorPracticalTest.Persistence.Abstractions\MedorPracticalTest.Persistence.Abstractions.csproj", "{D416A055-530C-4D47-82BF-7AC670854226}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,6 +74,10 @@ Global
 		{E1342138-BAD8-4F5C-8DEC-BD62BD90389F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1342138-BAD8-4F5C-8DEC-BD62BD90389F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1342138-BAD8-4F5C-8DEC-BD62BD90389F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D416A055-530C-4D47-82BF-7AC670854226}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D416A055-530C-4D47-82BF-7AC670854226}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D416A055-530C-4D47-82BF-7AC670854226}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D416A055-530C-4D47-82BF-7AC670854226}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +96,7 @@ Global
 		{2823D87B-8974-4B75-8874-36411B0F1D43} = {21E2F5C8-FA07-4C9E-B0E7-D637E0351E36}
 		{042590FD-5EEC-465F-8A4B-226DC58A4BA8} = {21E2F5C8-FA07-4C9E-B0E7-D637E0351E36}
 		{E1342138-BAD8-4F5C-8DEC-BD62BD90389F} = {21E2F5C8-FA07-4C9E-B0E7-D637E0351E36}
+		{D416A055-530C-4D47-82BF-7AC670854226} = {367898E0-8713-469D-B95C-6DA767ECCA51}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CFBD5F85-68E6-4C45-B6F9-854D1A8E8DF8}
