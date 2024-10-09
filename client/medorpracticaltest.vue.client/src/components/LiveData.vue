@@ -66,8 +66,8 @@ h3 {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-height: 400px;
   overflow-y: auto;
+  max-height: 800px;
 }
 
 .data-row {
