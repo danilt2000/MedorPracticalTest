@@ -8,7 +8,6 @@ import SavedData from "./components/SavedData.vue";
 
 <template>
   <main>
-    
     <h1>Bitcoin</h1>
     <h1>CZK 1,471,929</h1>
     <Chart/>
