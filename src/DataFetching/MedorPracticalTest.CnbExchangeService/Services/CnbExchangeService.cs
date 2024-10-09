@@ -14,23 +14,23 @@ namespace MedorPracticalTest.CnbExchangeService.Services
 
                 public async Task<decimal> GetEurCzkExchangeRateAsync(DateTime date)
                 {
-                        string dateStr = date.ToString("dd.MM.yyyy");
+                        var dateStr = date.ToString("dd.MM.yyyy");
 
-                        string apiUrl = $"https://www.cnb.cz/en/financial_markets/foreign_exchange_market/exchange_rate_fixing/daily.txt?date={dateStr}";
+                        var apiUrl = $"https://www.cnb.cz/en/financial_markets/foreign_exchange_market/exchange_rate_fixing/daily.txt?date={dateStr}";
 
                         var response = await _httpClient.GetAsync(apiUrl);
                         response.EnsureSuccessStatusCode();
 
                         var content = await response.Content.ReadAsStringAsync();
 
-                        string[] lines = content.Split('\n');
+                        var lines = content.Split('\n');
 
                         foreach (var line in lines)
                         {
                                 if (line.Contains("EUR"))
                                 {
-                                        string[] parts = line.Split('|');
-                                        if (parts.Length >= 5 && decimal.TryParse(parts[4], NumberStyles.Any, CultureInfo.InvariantCulture, out decimal rate))
+                                        var parts = line.Split('|');
+                                        if (parts.Length >= 5 && decimal.TryParse(parts[4], NumberStyles.Any, CultureInfo.InvariantCulture, out var rate))
                                         {
                                                 return rate;
                                         }
@@ -40,7 +40,7 @@ namespace MedorPracticalTest.CnbExchangeService.Services
                         throw new Exception($"Exchange rate for EUR to CZK on {dateStr} not found.");
                 }
 
-                public async Task<Dictionary<DateTime, decimal>> GetEurCzkExchangeRatesForDatesAsync(IEnumerable<DateTime> dates)
+                public async Task<Dictionary<DateTime, decimal>> GetEurCzkExchangeRatesAsync(IEnumerable<DateTime> dates)
                 {
                         var tasks = new List<Task<KeyValuePair<DateTime, decimal>>>();
 
@@ -56,14 +56,14 @@ namespace MedorPracticalTest.CnbExchangeService.Services
 
                 private async Task<KeyValuePair<DateTime, decimal>> GetExchangeRateForDateAsync(DateTime date)
                 {
-                        string dateStr = date.ToString("dd.MM.yyyy");
-                        string apiUrl = $"https://www.cnb.cz/en/financial_markets/foreign_exchange_market/exchange_rate_fixing/daily.txt?date={dateStr}";
+                        var dateStr = date.ToString("dd.MM.yyyy");
+                        var apiUrl = $"https://www.cnb.cz/en/financial_markets/foreign_exchange_market/exchange_rate_fixing/daily.txt?date={dateStr}";
 
                         var response = await _httpClient.GetAsync(apiUrl);
                         response.EnsureSuccessStatusCode();
 
                         var content = await response.Content.ReadAsStringAsync();
-                        string[] lines = content.Split('\n');
+                        var lines = content.Split('\n');
 
                         foreach (var line in lines)
                         {

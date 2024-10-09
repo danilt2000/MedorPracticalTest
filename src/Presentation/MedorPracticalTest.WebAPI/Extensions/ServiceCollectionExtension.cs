@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using MedorPracticalTest.Application;
+﻿using MedorPracticalTest.Application;
 using MedorPracticalTest.WebAPI.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;

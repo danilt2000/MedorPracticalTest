@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MedorPracticalTest.Application.Exceptions;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Text.Json;
 
@@ -40,10 +41,14 @@ namespace MedorPracticalTest.WebAPI.Middlewares
                                 };
 
                                 var exceptionMessage = "";
-
-                                // Handle known exception type
+                                
                                 switch (e)
                                 {
+                                        case BitcoinNotFoundException notFoundEx:
+                                                problemDetails.Status = (int)HttpStatusCode.NotFound;
+                                                exceptionMessage = notFoundEx.Message;
+                                                break;
+
                                         default:
                                                 problemDetails.Type = "Server Error";
                                                 problemDetails.Title = "Server Error";
@@ -52,8 +57,7 @@ namespace MedorPracticalTest.WebAPI.Middlewares
                                 }
 
                                 problemDetails.Detail = exceptionMessage;
-
-                                // Write response
+                                
                                 var json = JsonSerializer.Serialize(problemDetails);
                                 context.Response.ContentType = "application/json";
                                 context.Response.StatusCode = (int)problemDetails.Status;

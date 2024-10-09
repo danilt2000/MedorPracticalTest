@@ -18,6 +18,7 @@ internal class Program
                         .WriteTo.File("Logs/log.txt", rollingInterval: RollingInterval.Day));
 
                 builder.Services.AddServices(builder.Configuration);
+
 #if RELEASE//Todo make it more nicer 
         builder.WebHost.ConfigureKestrel(serverOptions =>
         {

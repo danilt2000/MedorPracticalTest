@@ -17,7 +17,6 @@ namespace MedorPracticalTest.Application
                         services.AddBitcoinPriceServices();
 
                         services.AddCnbExchangeServices();
-                        //services.AddMediatR(typeof(GetCurrentBitcoinPriceRequestHandler).Assembly);
 
                         services.AddMediatR(config =>
                         {
@@ -26,13 +25,6 @@ namespace MedorPracticalTest.Application
                         });
 
                         services.AddApplicationPersistence(configuration);
-                        //services.AddMediatR(config =>
-                        //{
-                        //        config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-                        //        config.AddBehavior(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehaviour<,>));
-                        //});
-
-                        //services.AddMediatR(typeof(GetCurrentBitcoinPriceRequestHandler).Assembly);
 
                         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 

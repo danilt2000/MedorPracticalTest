@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using MedorPracticalTest.Persistence.Abstractions.Repositories;
 
 namespace MedorPracticalTest.Application.Requests.Bitcoins.Commands.DeleteBitcoinPriceRequest

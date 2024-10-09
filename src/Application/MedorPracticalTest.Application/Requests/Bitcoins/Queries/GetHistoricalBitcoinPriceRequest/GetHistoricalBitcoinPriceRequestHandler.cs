@@ -25,14 +25,7 @@ namespace MedorPracticalTest.Application.Requests.Bitcoins.Queries.GetHistorical
 
                         bitcoins = await AddCzkPricesToBitcoinListAsync(bitcoins);
 
-                        var enumerable = bitcoins as Bitcoin[] ?? bitcoins.ToArray();
-
-                        if (enumerable.Length < 1)
-                        {
-                                //throw new ProductNotFoundException(request.Id);//Todo make custom exception 
-                        }
-
-                        return enumerable;
+                        return bitcoins;
                 }
 
                 private async Task<List<Bitcoin>> AddCzkPricesToBitcoinListAsync(IEnumerable<Bitcoin> bitcoins)
@@ -41,7 +34,7 @@ namespace MedorPracticalTest.Application.Requests.Bitcoins.Queries.GetHistorical
 
                         var uniqueDates = enumerableBitcoins.Select(b => b.Timestamp.Date).Distinct();
 
-                        var exchangeRates = await _cnbExchangeService.GetEurCzkExchangeRatesForDatesAsync(uniqueDates);
+                        var exchangeRates = await _cnbExchangeService.GetEurCzkExchangeRatesAsync(uniqueDates);
 
                         var bitcoinListWithCzkPrices = new List<Bitcoin>();
 
