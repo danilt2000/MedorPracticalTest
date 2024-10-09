@@ -36,6 +36,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedorPracticalTest.CnbExcha
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedorPracticalTest.Persistence.Abstractions", "src\Infrastructure\MedorPracticalTest.Persistence.Abstractions\MedorPracticalTest.Persistence.Abstractions.csproj", "{D416A055-530C-4D47-82BF-7AC670854226}"
 EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "medorpracticaltest.vue.client", "client\MedorpracticalTest.Vue.Client\medorpracticaltest.vue.client.esproj", "{E13A7E87-74C8-4184-A0A3-1563F81A4E6A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,12 @@ Global
 		{D416A055-530C-4D47-82BF-7AC670854226}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D416A055-530C-4D47-82BF-7AC670854226}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D416A055-530C-4D47-82BF-7AC670854226}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E13A7E87-74C8-4184-A0A3-1563F81A4E6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E13A7E87-74C8-4184-A0A3-1563F81A4E6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E13A7E87-74C8-4184-A0A3-1563F81A4E6A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E13A7E87-74C8-4184-A0A3-1563F81A4E6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E13A7E87-74C8-4184-A0A3-1563F81A4E6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E13A7E87-74C8-4184-A0A3-1563F81A4E6A}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,6 +105,7 @@ Global
 		{042590FD-5EEC-465F-8A4B-226DC58A4BA8} = {21E2F5C8-FA07-4C9E-B0E7-D637E0351E36}
 		{E1342138-BAD8-4F5C-8DEC-BD62BD90389F} = {21E2F5C8-FA07-4C9E-B0E7-D637E0351E36}
 		{D416A055-530C-4D47-82BF-7AC670854226} = {367898E0-8713-469D-B95C-6DA767ECCA51}
+		{E13A7E87-74C8-4184-A0A3-1563F81A4E6A} = {A181C51F-4F58-4192-A3A8-56EB251250F9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CFBD5F85-68E6-4C45-B6F9-854D1A8E8DF8}
