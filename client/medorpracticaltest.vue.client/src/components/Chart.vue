@@ -140,8 +140,8 @@
   
   <style scoped>
   canvas {
-    max-width: 100%;
-    height: 400px;
+    max-width: auto;
+    max-height: auto;
   }
   </style>
   

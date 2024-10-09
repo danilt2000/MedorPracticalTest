@@ -39,7 +39,10 @@ header {
   .logo {
     margin: 0 2rem 0 0;
   }
-
+  .container {
+    min-width: 300px;
+    flex-grow: 1;
+}
   header .wrapper {
     display: flex;
     place-items: flex-start;

@@ -164,9 +164,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.greetings {
-  padding: 20px;
-}
+
 
 .green {
   font-weight: 500;
@@ -334,7 +332,7 @@ h3 {
   }
 
   .live-data {
-    max-width: 600px;
+    max-width: auto;
   }
 }
 </style>
