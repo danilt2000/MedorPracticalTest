@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { savedDataStore } from '../store';
 
 defineProps({
   msg: {
@@ -110,6 +111,11 @@ if (isNaN(localTimestamp.getTime())) {
 
     if (response.ok) {
       liveData.value[index].saved = true;
+      savedDataStore.savedData.push({
+        date: dataToSave.date,
+        price: dataToSave.priceCZK,
+        note: ""
+      });
     } else {
       console.error("Failed to save data");
     }

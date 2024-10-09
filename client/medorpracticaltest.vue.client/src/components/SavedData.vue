@@ -4,16 +4,42 @@
       <table>
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Price</th>
-            <th>Note</th>
+            <th class="date-column">Date</th>
+            <th class="price-column">Price (CZK)</th>
+            <th class="price-column">Price (EUR)</th>
+            <th class="price-column">Price (USD)</th>
+            <th class="note-column">Note</th>
+            <th class="actions-column">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in data" :key="index">
+          <tr v-for="(item, index) in savedData" :key="index">
             <td>{{ item.date }}</td>
-            <td>{{ item.price }}</td>
-            <td>{{ item.note }}</td>
+            <td>{{ item.priceCZK }}</td>
+            <td>{{ item.priceEUR }}</td>
+            <td>{{ item.priceUSD }}</td>
+            <td>
+              <div v-if="!item.isEditing" class="editable-note" @click="startEditing(index)">
+                <span class="note-text">{{ item.note || 'Click to add note' }}</span>
+                <span class="tooltip">Click to edit</span>
+              </div>
+              <div v-else>
+                <textarea
+                  v-model="item.note"
+                  @input="checkNoteLength(index)"
+                  @blur="stopEditing(index)"
+                  @keyup.enter="stopEditing(index)"
+                  class="edit-input"
+                  placeholder="Enter your note here..."
+                />
+                <div v-if="item.note.length > maxNoteLength" class="warning">
+                  Note is too long ({{ item.note.length }}/{{ maxNoteLength }} characters). Please shorten it.
+                </div>
+              </div>
+            </td>
+            <td>
+              <button @click="deleteEntry(index)" class="delete-button">🗑️</button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -21,17 +47,36 @@
   </template>
   
   <script setup>
-  import { ref } from 'vue';
+  import { ref, computed } from 'vue';
+  import { savedDataStore } from '../store'; // Import the shared store
   
-  const data = ref([
-    { date: '19:10', price: 'CZK 1,471,929', note: 'Price has stabilized after a sharp rise' },
-    { date: '19:05', price: 'CZK 1,471,929', note: 'Market started to decline after news of regulatory changes' },
-    { date: '19:00', price: 'CZK 1,471,929', note: 'Price increase following a surge in trading volume' },
-    { date: '18:55', price: 'CZK 1,471,929', note: 'Bitcoin reached a new monthly high' },
-    { date: '18:50', price: 'CZK 1,471,929', note: 'Sharp decline due to mass sell-off' },
-    { date: '18:45', price: 'CZK 1,471,929', note: 'Correction after a strong rally' },
-    { date: '18:40', price: 'CZK 1,471,929', note: 'Positive impact of Federal Reserve decisions' },
-  ]);
+  const savedData = computed(() => savedDataStore.savedData);
+  const maxNoteLength = 45; // Maximum allowed characters for the note
+  
+  function startEditing(index) {
+    savedDataStore.savedData[index].isEditing = true;
+  }
+  
+  function stopEditing(index) {
+    // Prevent exiting edit mode if the note is too long
+    if (savedDataStore.savedData[index].note.length > maxNoteLength) {
+      alert(`Note exceeds the maximum length of ${maxNoteLength} characters.`);
+      return;
+    }
+    savedDataStore.savedData[index].isEditing = false;
+  }
+  
+  function checkNoteLength(index) {
+    if (savedDataStore.savedData[index].note.length > maxNoteLength) {
+      savedDataStore.savedData[index].note = savedDataStore.savedData[index].note.substring(0, maxNoteLength);
+    }
+  }
+  
+  function deleteEntry(index) {
+    if (confirm('Are you sure you want to delete this entry?')) {
+      savedDataStore.savedData.splice(index, 1);
+    }
+  }
   </script>
   
   <style scoped>
@@ -50,13 +95,29 @@
   }
   
   thead {
-    background-color: #f4f6f8;
+   background-color: #f4f6f8;
   }
   
   th, td {
-    padding: 0.75rem 1rem;
+    padding: 0.5rem 0.5rem;
     text-align: left;
     border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .date-column {
+    width: 10%;
+  }
+  
+  .price-column {
+    width: 10%;
+  }
+  
+  .note-column {
+    width: 50%; /* Allocate more space to the note column */
+  }
+  
+  .actions-column {
+    width: 5%;
   }
   
   tbody tr:nth-child(even) {
@@ -73,6 +134,71 @@
   
   th {
     font-weight: 600;
+  }
+  
+  .editable-note {
+    position: relative;
+    cursor: pointer;
+    color: #007bff;
+    min-height: 1.5rem;
+  }
+  
+  .note-text {
+    display: block;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .tooltip {
+    visibility: hidden;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 5px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    z-index: 1;
+  }
+  
+  .editable-note:hover .tooltip {
+    visibility: visible;
+  }
+  
+  .edit-input {
+    width: 100%;
+    height: 2.5rem;
+    resize: none;
+    overflow: hidden;
+    font-size: 0.9rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 0.5rem;
+    box-sizing: border-box;
+  }
+  
+  .warning {
+    color: #dc3545;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+  }
+  
+  .delete-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+  }
+  
+  .delete-button:hover {
+    color: #dc3545;
   }
   </style>
   
