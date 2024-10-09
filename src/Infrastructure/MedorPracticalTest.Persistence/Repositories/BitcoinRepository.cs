@@ -23,6 +23,7 @@ namespace MedorPracticalTest.Persistence.Repositories
                         command.Parameters.AddWithValue("@BitcoinPriceUSD", bitcoin.BitcoinPriceUSD);
                         command.Parameters.AddWithValue("@BitcoinPriceEUR", bitcoin.BitcoinPriceEUR);
                         command.Parameters.AddWithValue("@BitcoinPriceCZK", bitcoin.BitcoinPriceCZK);
+                        command.Parameters.AddWithValue("@Timestamp", bitcoin.Timestamp);
                         command.Parameters.AddWithValue("@Note", bitcoin.Note ?? (object)DBNull.Value);
 
                         await connection.OpenAsync();

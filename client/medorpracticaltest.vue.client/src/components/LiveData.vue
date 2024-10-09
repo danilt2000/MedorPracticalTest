@@ -17,7 +17,8 @@ async function fetchData() {
   const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
   const isoDate = oneDayAgo.toISOString();
 
-  const response = await fetch(
+  // Fetch historical data
+  const historicalResponse = await fetch(
     `https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/GetHistoricalData?startDate=${encodeURIComponent(
       isoDate
     )}`,
@@ -27,10 +28,22 @@ async function fetchData() {
     }
   );
 
-  const result = await response.json();
+  const historicalResult = await historicalResponse.json();
 
-  
-  liveData.value = result
+  // Fetch saved data
+  const savedResponse = await fetch(
+    `https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/GetSavedData`,
+    {
+      method: "GET",
+      redirect: "follow",
+    }
+  );
+
+  const savedResult = await savedResponse.json();
+  const savedTimestamps = new Set(savedResult.map(item => item.timestamp));
+
+  // Map data and check if already saved
+  liveData.value = historicalResult
     .map((item) => ({
       time: new Date(item.timestamp).toLocaleString('en-US', {
         hour: '2-digit',
@@ -41,11 +54,46 @@ async function fetchData() {
       priceCZK: `CZK ${item.bitcoinPriceCZK.toLocaleString()}`,
       priceEUR: `EUR ${item.bitcoinPriceEUR.toLocaleString()}`,
       priceUSD: `USD ${item.bitcoinPriceUSD.toLocaleString()}`,
-      saved: false,
+      saved: savedTimestamps.has(item.timestamp), // Mark as saved if it exists in the saved data
     }))
     .reverse(); 
 
   isLoading.value = false; 
+}
+
+async function saveData(index) {
+  const dataToSave = liveData.value[index];
+  
+  // Example payload for saving data
+  const payload = {
+    bitcoinPriceUSD: parseFloat(dataToSave.priceUSD.replace(/[^\d.-]/g, '')),
+    bitcoinPriceEUR: parseFloat(dataToSave.priceEUR.replace(/[^\d.-]/g, '')),
+    bitcoinPriceCZK: parseFloat(dataToSave.priceCZK.replace(/[^\d.-]/g, '')),
+    timestamp: new Date(dataToSave.date).toISOString(),
+    note: "Saved from UI"
+  };
+
+  // Send the request to save data
+  try {
+    const response = await fetch(
+      'https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/SaveLiveData',
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      }
+    );
+
+    if (response.ok) {
+      liveData.value[index].saved = true;
+    } else {
+      console.error("Failed to save data");
+    }
+  } catch (error) {
+    console.error("Error saving data:", error);
+  }
 }
 
 onMounted(() => {
@@ -78,7 +126,7 @@ onMounted(() => {
         <button
           class="save-button"
           :class="{ 'saved': data.saved }"
-          @click="saveData(index)"
+          @click="!data.saved && saveData(index)"
         >
           {{ data.saved ? 'SAVED' : 'SAVE' }}
         </button>
@@ -105,158 +153,160 @@ h3 {
   color: #333;
 }
 .live-data {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    overflow-y: auto;
-    max-height: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  max-height: 800px;
+}
+
+.live-data::-webkit-scrollbar {
+  width: 10px;
+}
+
+.live-data::-webkit-scrollbar-track {
+  background: #ffffff;
+  border-radius: 10px;
+}
+
+.live-data::-webkit-scrollbar-thumb {
+  background-color: #c0c0c0;
+  border-radius: 10px;
+  border: 2px solid #ffffff;
+  min-height: 100px;
+}
+
+.skeleton-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-grow: 1;
+}
+
+.skeleton-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background-color: #f0f0f0;
+  border-radius: 12px;
+  animation: pulse 1.5s infinite;
+  height: 70px;
+}
+
+.skeleton-info,
+.skeleton-prices,
+.skeleton-button {
+  background-color: #e0e0e0;
+  border-radius: 6px;
+}
+
+.skeleton-info {
+  width: 20%;
+  height: 30px;
+}
+
+.skeleton-prices {
+  width: 50%;
+  height: 30px;
+}
+
+.skeleton-button {
+  width: 15%;
+  height: 30px;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
   }
-  
-  .live-data::-webkit-scrollbar {
-    width: 10px;
+  50% {
+    opacity: 0.4;
   }
-  
-  .live-data::-webkit-scrollbar-track {
-    background: #ffffff;
-    border-radius: 10px;
+  100% {
+    opacity: 1;
   }
-  
-  .live-data::-webkit-scrollbar-thumb {
-    background-color: #c0c0c0;
-    border-radius: 10px;
-    border: 2px solid #ffffff;
-    min-height: 100px; 
+}
+
+.data-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+}
+
+.data-row:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.data-row:nth-child(even) {
+  background-color: #ffffff;
+}
+
+.data-row:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.075);
+}
+
+.data-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.data-time {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.data-date {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.data-prices {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.data-price {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.save-button {
+  background-color: #ffd700;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #333;
+  transition: background-color 0.3s;
+  width: 80px; /* Set a fixed width */
+  text-align: center; /* Center the text */
+}
+
+.save-button.saved {
+  background-color: #32cd32;
+  color: white;
+}
+
+@media (min-width: 1024px) {
+  .green,
+  h3 {
+    text-align: left;
   }
-  
-  .skeleton-container {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    flex-grow: 1;
+
+  .live-data {
+    max-width: 600px;
   }
-  
-  .skeleton-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px;
-    background-color: #f0f0f0;
-    border-radius: 12px;
-    animation: pulse 1.5s infinite;
-    height: 70px;
-  }
-  
-  .skeleton-info,
-  .skeleton-prices,
-  .skeleton-button {
-    background-color: #e0e0e0;
-    border-radius: 6px;
-  }
-  
-  .skeleton-info {
-    width: 20%;
-    height: 30px;
-  }
-  
-  .skeleton-prices {
-    width: 50%;
-    height: 30px;
-  }
-  
-  .skeleton-button {
-    width: 15%;
-    height: 30px;
-  }
-  
-  @keyframes pulse {
-    0% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.4;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-  
-  .data-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px;
-      background-color: #ffffff;
-      border-radius: 12px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-      transition: transform 0.2s ease-in-out, box-shadow 0.2s;
-    }
-    
-    .data-row:nth-child(odd) {
-      background-color: #f9f9f9;
-    }
-    
-    .data-row:nth-child(even) {
-      background-color: #ffffff;
-    }
-    
-    .data-row:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.075);
-    }
-  
-  .data-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .data-time {
-    font-size: 1rem;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .data-date {
-    font-size: 0.85rem;
-    color: #777;
-  }
-  
-  .data-prices {
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-  }
-  
-  .data-price {
-    font-size: 0.9rem;
-    color: #555;
-  }
-  
-  .save-button {
-    background-color: #ffd700;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 15px;
-    cursor: pointer;
-    font-weight: bold;
-    color: #333;
-    transition: background-color 0.3s;
-  }
-  
-  .save-button.saved {
-    background-color: #32cd32;
-    color: white;
-  }
-  
-  @media (min-width: 1024px) {
-    .green,
-    h3 {
-      text-align: left;
-    }
-  
-    .live-data {
-      max-width: 600px;
-    }
-  }
-  </style>
+}
+</style>
