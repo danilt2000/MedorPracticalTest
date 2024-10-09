@@ -36,8 +36,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedorPracticalTest.CnbExcha
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedorPracticalTest.Persistence.Abstractions", "src\Infrastructure\MedorPracticalTest.Persistence.Abstractions\MedorPracticalTest.Persistence.Abstractions.csproj", "{D416A055-530C-4D47-82BF-7AC670854226}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "medorpracticaltest.vue.client", "client\MedorpracticalTest.Vue.Client\medorpracticaltest.vue.client.esproj", "{E13A7E87-74C8-4184-A0A3-1563F81A4E6A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
