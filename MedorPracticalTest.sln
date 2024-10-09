@@ -34,9 +34,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedorPracticalTest.CnbExcha
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedorPracticalTest.CnbExchangeService.Abstractions", "src\DataFetching\MedorPracticalTest.CnbExchangeService.Abstractions\MedorPracticalTest.CnbExchangeService.Abstractions.csproj", "{E1342138-BAD8-4F5C-8DEC-BD62BD90389F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedorPracticalTest.Persistence.Abstractions", "src\Infrastructure\MedorPracticalTest.Persistence.Abstractions\MedorPracticalTest.Persistence.Abstractions.csproj", "{D416A055-530C-4D47-82BF-7AC670854226}"
-EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "medorpracticaltest.vue.client", "src\Presentation\MedorPracticalTest.Vue.Client\medorpracticaltest.vue.client.esproj", "{1C865CDC-1A3D-4242-9C43-FECDBD65DF1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedorPracticalTest.Persistence.Abstractions", "src\Infrastructure\MedorPracticalTest.Persistence.Abstractions\MedorPracticalTest.Persistence.Abstractions.csproj", "{D416A055-530C-4D47-82BF-7AC670854226}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -80,12 +78,6 @@ Global
 		{D416A055-530C-4D47-82BF-7AC670854226}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D416A055-530C-4D47-82BF-7AC670854226}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D416A055-530C-4D47-82BF-7AC670854226}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1C865CDC-1A3D-4242-9C43-FECDBD65DF1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1C865CDC-1A3D-4242-9C43-FECDBD65DF1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1C865CDC-1A3D-4242-9C43-FECDBD65DF1F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{1C865CDC-1A3D-4242-9C43-FECDBD65DF1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1C865CDC-1A3D-4242-9C43-FECDBD65DF1F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1C865CDC-1A3D-4242-9C43-FECDBD65DF1F}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -105,7 +97,6 @@ Global
 		{042590FD-5EEC-465F-8A4B-226DC58A4BA8} = {21E2F5C8-FA07-4C9E-B0E7-D637E0351E36}
 		{E1342138-BAD8-4F5C-8DEC-BD62BD90389F} = {21E2F5C8-FA07-4C9E-B0E7-D637E0351E36}
 		{D416A055-530C-4D47-82BF-7AC670854226} = {367898E0-8713-469D-B95C-6DA767ECCA51}
-		{1C865CDC-1A3D-4242-9C43-FECDBD65DF1F} = {A181C51F-4F58-4192-A3A8-56EB251250F9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CFBD5F85-68E6-4C45-B6F9-854D1A8E8DF8}
