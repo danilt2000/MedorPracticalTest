@@ -46,6 +46,13 @@ internal class Program
                         }
                 });
 
+                app.UseCors(k =>
+                {
+                        k.WithMethods("POST", "GET", "PATCH", "PUT", "DELETE");
+                        k.AllowAnyOrigin();
+                        k.AllowAnyHeader();
+                });
+
                 app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
                 app.UseHttpsRedirection();

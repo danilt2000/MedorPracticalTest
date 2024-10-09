@@ -59,7 +59,7 @@ namespace MedorPracticalTest.WebAPI.Controllers.v1
                         return Ok();
                 }
 
-                // PUT: api/BitcoinPrice/UpdateSavedData
+                // PATCH: api/BitcoinPrice/UpdateSavedData
                 [HttpPatch("UpdateNote")]
                 public async Task<IActionResult> UpdateNote([FromBody] UpdateBitcoinNoteRequest request)
                 {
