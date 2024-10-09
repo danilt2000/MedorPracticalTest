@@ -1,5 +1,6 @@
 using MedorPracticalTest.WebAPI.Extensions;
 using MedorPracticalTest.WebAPI.Middlewares;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Serilog;
 
 namespace MedorPracticalTest.WebAPI;
@@ -17,7 +18,7 @@ internal class Program
                         .WriteTo.File("Logs/log.txt", rollingInterval: RollingInterval.Day));
 
                 builder.Services.AddServices(builder.Configuration);
-#if RELEASE
+#if RELEASE//Todo make it more nicer 
         builder.WebHost.ConfigureKestrel(serverOptions =>
         {
             serverOptions.ListenAnyIP(80);
@@ -31,7 +32,18 @@ internal class Program
 
                 var app = builder.Build();
 
+                var versionDescProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+
                 app.AddSwagger();
+
+                app.UseSwagger();
+                app.UseSwaggerUI(options =>
+                {
+                        foreach (var desc in versionDescProvider.ApiVersionDescriptions)
+                        {
+                                options.SwaggerEndpoint($"/swagger/{desc.GroupName}/swagger.json", $"MedorPracticalTest - {desc.GroupName.ToUpper()}");
+                        }
+                });
 
                 app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
