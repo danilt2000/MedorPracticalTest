@@ -11,66 +11,88 @@ defineProps({
 const liveData = ref([]); 
 const isLoading = ref(true);
 
+function normalizeTimestamp(timestamp) {
+  // Truncate milliseconds for comparison
+  return new Date(timestamp).toISOString().split('.')[0] + "Z";
+}
+
 async function fetchData() {
   isLoading.value = true;
   const now = new Date();
   const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
   const isoDate = oneDayAgo.toISOString();
 
-  // Fetch historical data
-  const historicalResponse = await fetch(
-    `https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/GetHistoricalData?startDate=${encodeURIComponent(
-      isoDate
-    )}`,
-    {
-      method: "GET",
-      redirect: "follow",
-    }
-  );
+  try {
+    // Fetch historical data
+    const historicalResponse = await fetch(
+      `https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/GetHistoricalData?startDate=${encodeURIComponent(
+        isoDate
+      )}`,
+      {
+        method: "GET",
+        redirect: "follow",
+      }
+    );
 
-  const historicalResult = await historicalResponse.json();
+    const historicalResult = await historicalResponse.json();
 
-  // Fetch saved data
-  const savedResponse = await fetch(
-    `https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/GetSavedData`,
-    {
-      method: "GET",
-      redirect: "follow",
-    }
-  );
+    // Fetch saved data
+    const savedResponse = await fetch(
+      `https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/GetSavedData`,
+      {
+        method: "GET",
+        redirect: "follow",
+      }
+    );
 
-  const savedResult = await savedResponse.json();
-  const savedTimestamps = new Set(savedResult.map(item => item.timestamp));
+    const savedResult = await savedResponse.json();
+    const savedTimestamps = new Set(savedResult.map(item => normalizeTimestamp(item.timestamp)));
 
-  // Map data and check if already saved
-  liveData.value = historicalResult
-    .map((item) => ({
-      time: new Date(item.timestamp).toLocaleString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true,
-      }),
-      date: new Date(item.timestamp).toLocaleDateString('en-US'),
-      priceCZK: `CZK ${item.bitcoinPriceCZK.toLocaleString()}`,
-      priceEUR: `EUR ${item.bitcoinPriceEUR.toLocaleString()}`,
-      priceUSD: `USD ${item.bitcoinPriceUSD.toLocaleString()}`,
-      saved: savedTimestamps.has(item.timestamp), // Mark as saved if it exists in the saved data
-    }))
-    .reverse(); 
+    // Map data and check if already saved
+    liveData.value = historicalResult
+      .map((item) => ({
+        time: new Date(item.timestamp).toLocaleString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: true,
+        }),
+        date: new Date(item.timestamp).toLocaleDateString('en-US'),
+        priceCZK: `CZK ${item.bitcoinPriceCZK.toLocaleString()}`,
+        priceEUR: `EUR ${item.bitcoinPriceEUR.toLocaleString()}`,
+        priceUSD: `USD ${item.bitcoinPriceUSD.toLocaleString()}`,
+        saved: savedTimestamps.has(normalizeTimestamp(item.timestamp)), // Check against normalized timestamp
+        timestamp: item.timestamp // Keep the original timestamp for future reference
+      }))
+      .reverse(); 
 
-  isLoading.value = false; 
+    isLoading.value = false;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    isLoading.value = false;
+  }
 }
 
 async function saveData(index) {
   const dataToSave = liveData.value[index];
   
+  // Combine date and time to create a valid timestamp
+  const dateTimeString = `${dataToSave.date} ${dataToSave.time}`;
+  const localTimestamp = new Date(dateTimeString);
+
+if (isNaN(localTimestamp.getTime())) {
+  console.error("Invalid date format:", dateTimeString);
+  return;
+}
+
+  const formattedTimestamp = `${localTimestamp.getFullYear()}-${(localTimestamp.getMonth() + 1).toString().padStart(2, '0')}-${localTimestamp.getDate().toString().padStart(2, '0')}T${localTimestamp.getHours().toString().padStart(2, '0')}:${localTimestamp.getMinutes().toString().padStart(2, '0')}:${localTimestamp.getSeconds().toString().padStart(2, '0')}.000`;
+
   // Example payload for saving data
   const payload = {
     bitcoinPriceUSD: parseFloat(dataToSave.priceUSD.replace(/[^\d.-]/g, '')),
     bitcoinPriceEUR: parseFloat(dataToSave.priceEUR.replace(/[^\d.-]/g, '')),
     bitcoinPriceCZK: parseFloat(dataToSave.priceCZK.replace(/[^\d.-]/g, '')),
-    timestamp: new Date(dataToSave.date).toISOString(),
-    note: "Saved from UI"
+    timestamp: formattedTimestamp, // Use the combined and parsed timestamp
+    note: ""
   };
 
   // Send the request to save data
