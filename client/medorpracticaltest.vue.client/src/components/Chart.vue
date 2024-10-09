@@ -14,23 +14,23 @@
   async function fetchData() {
     // const response = await fetch('https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/GetHistoricalData?startDate=2024-10-07T00%3A00%3A00Z');
     
-    // const response = await fetch(
-    //   'https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/GetHistoricalData?startDate=2024-10-07T00%3A00%3A00Z',
-    //   {
-    //     method: "GET",
-    //     redirect: "follow"
-    //   }
-    // );
+    const response = await fetch(
+      'https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/GetHistoricalData?startDate=2024-10-07T00%3A00%3A00Z',
+      {
+        method: "GET",
+        redirect: "follow"
+      }
+    );
 
-    const requestOptions = {
-  method: "GET",
-  redirect: "follow"
-};
+//     const requestOptions = {
+//   method: "GET",
+//   redirect: "follow"
+// };
 
-fetch("https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/GetHistoricalData?startDate=2024-10-07T00%3A00%3A00Z", requestOptions)
-  .then((response) => response.text())
-  .then((result) => console.log(result))
-  .catch((error) => console.error(error));
+// fetch("https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/GetHistoricalData?startDate=2024-10-07T00%3A00%3A00Z", requestOptions)
+//   .then((response) => response.text())
+//   .then((result) => console.log(result))
+//   .catch((error) => console.error(error));
     
     const result = await response.json();
   
