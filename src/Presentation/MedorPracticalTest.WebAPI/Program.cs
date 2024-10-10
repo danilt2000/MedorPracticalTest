@@ -7,7 +7,7 @@ namespace MedorPracticalTest.WebAPI;
 
 internal class Program
 {
-        public static void Main(string[] args)//Todo introduce startup 
+        public static void Main(string[] args)
         {
                 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +19,7 @@ internal class Program
 
                 builder.Services.AddServices(builder.Configuration);
 
-#if RELEASE//Todo make it more nicer 
+#if RELEASE
         builder.WebHost.ConfigureKestrel(serverOptions =>
         {
             serverOptions.ListenAnyIP(80);

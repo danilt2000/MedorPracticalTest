@@ -24,7 +24,7 @@ async function fetchData() {
 
   try {
     const historicalResponse = await fetch(
-      `https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/GetHistoricalData?startDate=${encodeURIComponent(
+      `api/v1/BitcoinPrice/GetHistoricalData?startDate=${encodeURIComponent(
         isoDate
       )}`,
       {
@@ -36,7 +36,7 @@ async function fetchData() {
     const historicalResult = await historicalResponse.json();
 
     const savedResponse = await fetch(
-      `https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/GetSavedData`,
+      `api/v1/BitcoinPrice/GetSavedData`,
       {
         method: "GET",
         redirect: "follow",
@@ -110,7 +110,7 @@ async function saveData(index) {
 
   try {
     const response = await fetch(
-      "https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/SaveLiveData",
+      "api/v1/BitcoinPrice/SaveLiveData",
       {
         method: "POST",
         headers: {

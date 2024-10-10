@@ -29,7 +29,7 @@
       };
   
       const response = await fetch(
-        "https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/GetCurrentPrice",
+        "/api/v1/BitcoinPrice/GetCurrentPrice",
         requestOptions
       );
   

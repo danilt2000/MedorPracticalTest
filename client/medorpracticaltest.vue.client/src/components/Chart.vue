@@ -15,9 +15,8 @@
     const now = new Date();
     const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
     const isoDate = oneDayAgo.toISOString();
-  //TODO MOVE THIS API STRING TO ANOTHER LAYER
     const response = await fetch(
-      `https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/GetHistoricalData?startDate=${encodeURIComponent(
+      `/api/v1/BitcoinPrice/GetHistoricalData?startDate=${encodeURIComponent(
         isoDate
       )}`,
       {

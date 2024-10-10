@@ -8,7 +8,7 @@ const maxNoteLength = 33;
 async function fetchSavedData() {
   try {
     const response = await fetch(
-      "https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/GetSavedData",
+      "api/v1/BitcoinPrice/GetSavedData",
       {
         method: "GET",
         headers: {
@@ -50,7 +50,7 @@ function startEditing(index) {
 async function updateNote(id, note) {
   try {
     const response = await fetch(
-      "https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/UpdateNote",
+      "api/v1/BitcoinPrice/UpdateNote",
       {
         method: "PATCH",
         headers: {
@@ -92,7 +92,7 @@ async function deleteEntry(index) {
   if (confirm("Are you sure you want to delete this entry?")) {
     try {
       const response = await fetch(
-        "https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/DeleteSavedData",
+        "api/v1/BitcoinPrice/DeleteSavedData",
         {
           method: "DELETE",
           headers: {

@@ -55,8 +55,8 @@ namespace MedorPracticalTest.BitcoinPriceService.Services
                         var startTimestamp = new DateTimeOffset(startDateTime).ToUnixTimeMilliseconds();
 
                         var bitcoinPrices = new List<Bitcoin>();
-                        
-                        //Todo write comments why binance api was used instead of coindesk
+
+                        //Because of the problems with cache on the coindesk api side, it was decided to choose a stable api from binance 
                         var usdApiUrl = $"https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=5m&startTime={startTimestamp}&endTime={endTimestamp}";
                         var eurApiUrl = $"https://api.binance.com/api/v3/klines?symbol=BTCEUR&interval=5m&startTime={startTimestamp}&endTime={endTimestamp}";
 
