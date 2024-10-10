@@ -1,11 +1,13 @@
----
-
 [![Medor Logo](https://www.medor.cz/wp-content/uploads/2021/11/logo-1.svg)](https://www.medor.cz)
+
 # Medor Practical Test
 
 This project is a solution for the Medor practical test, aimed at implementing a system for retrieving, saving, and managing Bitcoin prices using C# and .NET technologies. The solution covers various aspects, including fetching real-time data, storing it in a database, and performing CRUD operations.
 
 ## Technologies Used
+
+![Mediator CQRS Pattern](https://learn.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/media/microservice-application-layer-implementation-web-api/mediator-cqrs-microservice.png)
+
 - **Framework:** .NET 8
 - **Database:** MSSQL with T-SQL scripts for stored procedures
 - **Deployment Tools:** Docker and Nginx for hosting and deployment
@@ -163,3 +165,5 @@ END;
 The above scripts set up the database for storing and managing Bitcoin data, including creating, updating, retrieving, and deleting records.
 
 ---
+
+The work was done by Danil Tkachenko Vadimovich 
