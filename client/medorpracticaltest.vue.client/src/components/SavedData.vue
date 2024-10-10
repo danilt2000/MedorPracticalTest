@@ -1,29 +1,32 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
-import { savedDataStore } from '../store';
+import { ref, computed, onMounted } from "vue";
+import { savedDataStore } from "../store";
 
 const savedData = computed(() => savedDataStore.savedData);
-const maxNoteLength = 40;
+const maxNoteLength = 33;
 
 async function fetchSavedData() {
   try {
-    const response = await fetch('https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/GetSavedData', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await fetch(
+      "https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/GetSavedData",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (response.ok) {
       const result = await response.json();
-      savedDataStore.savedData = result.map(item => ({
-        date: new Date(item.timestamp).toLocaleString('en-US', {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit',
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
+      savedDataStore.savedData = result.map((item) => ({
+        date: new Date(item.timestamp).toLocaleString("en-US", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
         }), // Format to include full date and time
         priceCZK: item.bitcoinPriceCZK,
         priceEUR: item.bitcoinPriceEUR,
@@ -32,13 +35,12 @@ async function fetchSavedData() {
         isEditing: false,
       }));
     } else {
-      console.error('Failed to fetch saved data');
+      console.error("Failed to fetch saved data");
     }
   } catch (error) {
-    console.error('Error fetching saved data:', error);
+    console.error("Error fetching saved data:", error);
   }
 }
-
 
 function startEditing(index) {
   savedDataStore.savedData[index].isEditing = true;
@@ -54,12 +56,14 @@ function stopEditing(index) {
 
 function checkNoteLength(index) {
   if (savedDataStore.savedData[index].note.length > maxNoteLength) {
-    savedDataStore.savedData[index].note = savedDataStore.savedData[index].note.substring(0, maxNoteLength);
+    savedDataStore.savedData[index].note = savedDataStore.savedData[
+      index
+    ].note.substring(0, maxNoteLength);
   }
 }
 
 function deleteEntry(index) {
-  if (confirm('Are you sure you want to delete this entry?')) {
+  if (confirm("Are you sure you want to delete this entry?")) {
     savedDataStore.savedData.splice(index, 1);
   }
 }
@@ -76,12 +80,12 @@ onMounted(() => {
       <table>
         <thead>
           <tr>
-            <th class="date-column">Date</th>
-            <th class="price-column">Price (CZK)</th>
-            <th class="price-column">Price (EUR)</th>
-            <th class="price-column">Price (USD)</th>
-            <th class="note-column">Note</th>
-            <th class="actions-column">Actions</th>
+            <th class="date-column">Notes</th>
+            <th class="price-column"></th>
+            <th class="price-column"></th>
+            <th class="price-column"></th>
+            <th class="note-column"></th>
+            <th class="actions-column"></th>
           </tr>
         </thead>
       </table>
@@ -94,8 +98,14 @@ onMounted(() => {
               <td>{{ item.priceEUR }}</td>
               <td>{{ item.priceUSD }}</td>
               <td>
-                <div v-if="!item.isEditing" class="editable-note" @click="startEditing(index)">
-                  <span class="note-text">{{ item.note || 'Click to add note' }}</span>
+                <div
+                  v-if="!item.isEditing"
+                  class="editable-note"
+                  @click="startEditing(index)"
+                >
+                  <span class="note-text">{{
+                    item.note || "Click to add note"
+                  }}</span>
                 </div>
                 <div v-else>
                   <textarea
@@ -108,7 +118,9 @@ onMounted(() => {
                 </div>
               </td>
               <td>
-                <button @click="deleteEntry(index)" class="delete-button">🗑️</button>
+                <button @click="deleteEntry(index)" class="delete-button">
+                  🗑️
+                </button>
               </td>
             </tr>
           </tbody>
@@ -119,7 +131,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-
 .saved-data-container {
   margin-top: 1rem;
 }
@@ -129,12 +140,12 @@ onMounted(() => {
 }
 
 .saved-data-scroll {
-    max-height: 180px; /* Set a fixed height for the scrollable content */
-    max-width: 100%; /* Limit the maximum width to the container width */
-    overflow-y: auto; /* Enable vertical scrolling */
-    overflow-x: auto; /* Enable horizontal scrolling if needed */
-    box-sizing: border-box; /* Make sure padding and borders are included in the element's total width and height */
-  }
+  max-height: 180px; /* Set a fixed height for the scrollable content */
+  max-width: 100%; /* Limit the maximum width to the container width */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: auto; /* Enable horizontal scrolling if needed */
+  box-sizing: border-box; /* Make sure padding and borders are included in the element's total width and height */
+}
 
 h2 {
   font-size: 1.5rem;
@@ -153,7 +164,8 @@ thead {
   z-index: 2;
 }
 
-th, td {
+th,
+td {
   padding: 0.5rem 0.5rem;
   text-align: left;
   border-bottom: 1px solid #e0e0e0;
@@ -161,6 +173,7 @@ th, td {
 
 .date-column {
   width: 10%;
+  height: 58px;
 }
 
 .price-column {
