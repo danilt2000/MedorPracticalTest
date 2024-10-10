@@ -1,12 +1,12 @@
 @import './base.css';
 
 #app {
-  width: 95%; /* Use 95% of the available screen width */
-  max-width: none; /* Remove the fixed max-width */
-  margin: 0 auto; /* Center the content */
+  width: 95%; 
+  max-width: none;
+  margin: 0 auto; 
 }
 :root {
-  --section-gap: 80px; /* Decrease the section gap */
+  --section-gap: 80px;
 }
 a,
 .green {
@@ -32,6 +32,6 @@ a,
   #app {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 40px; /* Set the gap between columns */
+    gap: 40px;
   }
 }

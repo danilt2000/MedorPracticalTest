@@ -13,7 +13,6 @@ const liveData = ref([]);
 const isLoading = ref(true);
 
 function normalizeTimestamp(timestamp) {
-  // Truncate milliseconds for comparison
   return new Date(timestamp).toISOString().split(".")[0] + "Z";
 }
 
@@ -24,7 +23,6 @@ async function fetchData() {
   const isoDate = oneDayAgo.toISOString();
 
   try {
-    // Fetch historical data
     const historicalResponse = await fetch(
       `https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/GetHistoricalData?startDate=${encodeURIComponent(
         isoDate
@@ -37,7 +35,6 @@ async function fetchData() {
 
     const historicalResult = await historicalResponse.json();
 
-    // Fetch saved data
     const savedResponse = await fetch(
       `https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/GetSavedData`,
       {
@@ -51,7 +48,6 @@ async function fetchData() {
       savedResult.map((item) => normalizeTimestamp(item.timestamp))
     );
 
-    // Map data and check if already saved
     liveData.value = historicalResult
       .map((item) => ({
         time: new Date(item.timestamp).toLocaleString("en-US", {
@@ -63,8 +59,8 @@ async function fetchData() {
         priceCZK: `CZK ${item.bitcoinPriceCZK.toLocaleString()}`,
         priceEUR: `EUR ${item.bitcoinPriceEUR.toLocaleString()}`,
         priceUSD: `USD ${item.bitcoinPriceUSD.toLocaleString()}`,
-        saved: savedTimestamps.has(normalizeTimestamp(item.timestamp)), // Check against normalized timestamp
-        timestamp: item.timestamp, // Keep the original timestamp for future reference
+        saved: savedTimestamps.has(normalizeTimestamp(item.timestamp)), 
+        timestamp: item.timestamp,
       }))
       .reverse();
 
@@ -78,7 +74,6 @@ async function fetchData() {
 async function saveData(index) {
   const dataToSave = liveData.value[index];
 
-  // Combine date and time to create a valid timestamp
   const dateTimeString = `${dataToSave.date} ${dataToSave.time}`;
   const localTimestamp = new Date(dateTimeString);
 
@@ -105,16 +100,14 @@ async function saveData(index) {
     .toString()
     .padStart(2, "0")}.000`;
 
-  // Example payload for saving data
   const payload = {
     bitcoinPriceUSD: parseFloat(dataToSave.priceUSD.replace(/[^\d.-]/g, "")),
     bitcoinPriceEUR: parseFloat(dataToSave.priceEUR.replace(/[^\d.-]/g, "")),
     bitcoinPriceCZK: parseFloat(dataToSave.priceCZK.replace(/[^\d.-]/g, "")),
-    timestamp: formattedTimestamp, // Use the combined and parsed timestamp
+    timestamp: formattedTimestamp, 
     note: "",
   };
 
-  // Send the request to save data
   try {
     const response = await fetch(
       "https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/SaveLiveData",
@@ -355,8 +348,8 @@ h3 {
   font-weight: bold;
   color: #333;
   transition: background-color 0.3s;
-  width: 80px; /* Set a fixed width */
-  text-align: center; /* Center the text */
+  width: 80px; 
+  text-align: center;
 }
 
 .save-button.saved {

@@ -1,18 +1,18 @@
 <script setup>
-import HelloWorld from "./components/HelloWorld.vue";
-import TheWelcome from "./components/TheWelcome.vue";
 import LiveData from "./components/LiveData.vue";
 import Chart from "./components/Chart.vue";
 import SavedData from "./components/SavedData.vue";
+import BitcoinPrice from "./components/BitcoinPrice.vue";
+
+
+
 </script>
 
 <template>
   <main>
-    <h1>Bitcoin</h1>
-    <h1>CZK 1,471,929</h1>
+    <BitcoinPrice />
     <Chart/>
   <SavedData />
-    <!-- <TheWelcome /> -->
   </main>
   <LiveData />
   

@@ -86,9 +86,31 @@ function checkNoteLength(index) {
   }
 }
 
-function deleteEntry(index) {
+async function deleteEntry(index) {
+  const itemId = savedDataStore.savedData[index].id;
+
   if (confirm("Are you sure you want to delete this entry?")) {
-    savedDataStore.savedData.splice(index, 1);
+    try {
+      const response = await fetch(
+        "https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/DeleteSavedData",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: itemId }),
+        }
+      );
+
+      if (response.ok) {
+        savedDataStore.savedData.splice(index, 1);
+        console.log("Entry deleted successfully");
+      } else {
+        console.error("Failed to delete entry");
+      }
+    } catch (error) {
+      console.error("Error deleting entry:", error);
+    }
   }
 }
 
@@ -164,11 +186,11 @@ onMounted(() => {
 }
 
 .saved-data-scroll {
-  max-height: 180px; /* Set a fixed height for the scrollable content */
-  max-width: 100%; /* Limit the maximum width to the container width */
-  overflow-y: auto; /* Enable vertical scrolling */
-  overflow-x: auto; /* Enable horizontal scrolling if needed */
-  box-sizing: border-box; /* Make sure padding and borders are included in the element's total width and height */
+  max-height: 176px;
+  max-width: 100%;
+  overflow-y: auto;
+  overflow-x: auto;
+  box-sizing: border-box;
 }
 
 h2 {
