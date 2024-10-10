@@ -3,7 +3,7 @@ import { ref, computed, onMounted } from 'vue';
 import { savedDataStore } from '../store';
 
 const savedData = computed(() => savedDataStore.savedData);
-const maxNoteLength = 22;
+const maxNoteLength = 40;
 
 async function fetchSavedData() {
   try {

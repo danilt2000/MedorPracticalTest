@@ -4,7 +4,7 @@ namespace MedorPracticalTest.Persistence.Abstractions.Repositories
 {
         public interface IBitcoinRepository
         {
-                Task SaveBitcoinAsync(Bitcoin bitcoin);
+                Task<int> SaveBitcoinAsync(Bitcoin bitcoin);
 
                 Task<IEnumerable<Bitcoin>> GetBitcoinsAsync();
 

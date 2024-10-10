@@ -54,9 +54,9 @@ namespace MedorPracticalTest.WebAPI.Controllers.v1
                 [HttpPost("SaveLiveData")]
                 public async Task<IActionResult> SaveLiveData([FromBody] SaveBitcoinPriceRequest request)
                 {
-                        await Mediator.Send(request);
+                        var idBitcoin = await Mediator.Send(request);
 
-                        return Ok();
+                        return Ok(idBitcoin);
                 }
 
                 // PATCH: api/BitcoinPrice/UpdateSavedData

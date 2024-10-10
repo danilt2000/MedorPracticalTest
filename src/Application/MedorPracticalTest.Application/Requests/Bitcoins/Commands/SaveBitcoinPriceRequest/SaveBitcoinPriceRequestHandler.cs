@@ -4,7 +4,7 @@ using MedorPracticalTest.Persistence.Abstractions.Repositories;
 
 namespace MedorPracticalTest.Application.Requests.Bitcoins.Commands.SaveBitcoinPriceRequest
 {
-        public class SaveBitcoinPriceRequestHandler : IRequestHandler<SaveBitcoinPriceRequest>
+        public class SaveBitcoinPriceRequestHandler : IRequestHandler<SaveBitcoinPriceRequest, int>
         {
                 private readonly IBitcoinRepository _repository;
 
@@ -13,7 +13,7 @@ namespace MedorPracticalTest.Application.Requests.Bitcoins.Commands.SaveBitcoinP
                         _repository = repository;
                 }
 
-                public async Task Handle(SaveBitcoinPriceRequest request, CancellationToken cancellationToken)
+                public async Task<int> Handle(SaveBitcoinPriceRequest request, CancellationToken cancellationToken)
                 {
                         var bitcoin = new Bitcoin(
                                 id: 0,
@@ -24,7 +24,9 @@ namespace MedorPracticalTest.Application.Requests.Bitcoins.Commands.SaveBitcoinP
                                 note: request.Note
                         );
 
-                        await _repository.SaveBitcoinAsync(bitcoin);
+                        var idBitcoin = await _repository.SaveBitcoinAsync(bitcoin);
+
+                        return idBitcoin;
                 }
         }
 }

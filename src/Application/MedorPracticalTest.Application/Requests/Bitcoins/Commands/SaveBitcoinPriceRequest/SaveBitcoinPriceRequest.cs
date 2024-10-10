@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MedorPracticalTest.Application.Requests.Bitcoins.Commands.SaveBitcoinPriceRequest
 {
-        public class SaveBitcoinPriceRequest : IRequest
+        public class SaveBitcoinPriceRequest : IRequest<int>
         {
                 [Required]
                 public decimal BitcoinPriceUSD { get; set; }

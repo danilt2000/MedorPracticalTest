@@ -14,7 +14,7 @@ namespace MedorPracticalTest.Persistence.Repositories
                         _connectionString = connectionString;
                 }
 
-                public async Task SaveBitcoinAsync(Bitcoin bitcoin)
+                public async Task<int> SaveBitcoinAsync(Bitcoin bitcoin)
                 {
                         await using var connection = new SqlConnection(_connectionString);
                         await using var command = new SqlCommand("dbo.SaveBitcoinData", connection);
@@ -27,7 +27,10 @@ namespace MedorPracticalTest.Persistence.Repositories
                         command.Parameters.AddWithValue("@Note", bitcoin.Note ?? (object)DBNull.Value);
 
                         await connection.OpenAsync();
-                        await command.ExecuteNonQueryAsync();
+
+                        var newId = (int)(await command.ExecuteScalarAsync())!;
+
+                        return newId;
                 }
 
                 public async Task<IEnumerable<Bitcoin>> GetBitcoinsAsync()
