@@ -1,7 +1,6 @@
 ---
 
-![Medor Logo](image.png)
-
+[![Medor Logo](https://www.medor.cz/wp-content/uploads/2021/11/logo-1.svg)](https://www.medor.cz)
 # Medor Practical Test
 
 This project is a solution for the Medor practical test, aimed at implementing a system for retrieving, saving, and managing Bitcoin prices using C# and .NET technologies. The solution covers various aspects, including fetching real-time data, storing it in a database, and performing CRUD operations.
