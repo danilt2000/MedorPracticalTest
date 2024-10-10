@@ -4,18 +4,12 @@ using MedorPracticalTest.Persistence.Abstractions.Repositories;
 
 namespace MedorPracticalTest.Application.Requests.Bitcoins.Queries.GetSavedBitcoinsRequest
 {
-        internal class GetSavedBitcoinsRequestHandler : IRequestHandler<GetSavedBitcoinsRequest, IEnumerable<Bitcoin>>
+        internal class GetSavedBitcoinsRequestHandler(IBitcoinRepository repository)
+                : IRequestHandler<GetSavedBitcoinsRequest, IEnumerable<Bitcoin>>
         {
-                private readonly IBitcoinRepository _repository;
-
-                public GetSavedBitcoinsRequestHandler(IBitcoinRepository repository)
-                {
-                        _repository = repository;
-                }
-
                 public async Task<IEnumerable<Bitcoin>> Handle(GetSavedBitcoinsRequest request, CancellationToken cancellationToken)
                 {
-                        var bitcoins = await _repository.GetBitcoinsAsync();
+                        var bitcoins = await repository.GetBitcoinsAsync();
 
                         return bitcoins;
                 }

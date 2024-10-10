@@ -5,18 +5,11 @@ using System.Data;
 
 namespace MedorPracticalTest.Persistence.Repositories
 {
-        internal class BitcoinRepository : IBitcoinRepository
+        internal class BitcoinRepository(string connectionString) : IBitcoinRepository
         {
-                private readonly string _connectionString;
-
-                public BitcoinRepository(string connectionString)
-                {
-                        _connectionString = connectionString;
-                }
-
                 public async Task<int> SaveBitcoinAsync(Bitcoin bitcoin)
                 {
-                        await using var connection = new SqlConnection(_connectionString);
+                        await using var connection = new SqlConnection(connectionString);
                         await using var command = new SqlCommand("dbo.SaveBitcoinData", connection);
 
                         command.CommandType = CommandType.StoredProcedure;
@@ -37,7 +30,7 @@ namespace MedorPracticalTest.Persistence.Repositories
                 {
                         var bitcoins = new List<Bitcoin>();
 
-                        await using var connection = new SqlConnection(_connectionString);
+                        await using var connection = new SqlConnection(connectionString);
                         await using var command = new SqlCommand("dbo.GetAllBitcoins", connection);
                         command.CommandType = CommandType.StoredProcedure;
 
@@ -60,7 +53,7 @@ namespace MedorPracticalTest.Persistence.Repositories
 
                 public async Task UpdateBitcoinNoteAsync(int id, string note)
                 {
-                        await using var connection = new SqlConnection(_connectionString);
+                        await using var connection = new SqlConnection(connectionString);
                         await using var command = new SqlCommand("dbo.UpdateBitcoinNote", connection);
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@Id", id);
@@ -72,7 +65,7 @@ namespace MedorPracticalTest.Persistence.Repositories
 
                 public async Task DeleteBitcoinAsync(int id)
                 {
-                        await using var connection = new SqlConnection(_connectionString);
+                        await using var connection = new SqlConnection(connectionString);
                         await using var command = new SqlCommand("dbo.DeleteBitcoinData", connection);
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@Id", id);
