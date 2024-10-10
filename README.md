@@ -15,6 +15,16 @@ This project is a solution for the Medor practical test, aimed at implementing a
 - **Frontend:** The live website is accessible [here](https://medor-seven.vercel.app/)
 - **Design Pattern:** Mediator and CQRS (Command Query Responsibility Segregation) for handling requests and organizing the application architecture.
 
+## Architecture
+
+![Clean architecture](https://miro.medium.com/max/256/0*cKlf8Eymfs0hu8-2.png)
+
+The project follows a clean architecture approach, ensuring a separation of concerns and making the codebase more maintainable and scalable. The solution was designed to adhere to best practices and coding standards, including:
+
+- [REST best practices](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api?fbclid=IwAR2oTRiYnQI71XZnpRj4DrFHV-TJ5whT-NAGJEqmvENIfbsnXyGHUygQ2K4) for designing pragmatic and efficient APIs.
+- [Structured logging](https://code-maze.com/structured-logging-in-asp-net-core-with-serilog/) using Serilog to ensure better traceability and monitoring.
+- [SOLID design principles](https://en.wikipedia.org/wiki/HATEOAS#cite_note-Fielding-Ch5-2) for creating a robust and maintainable codebase.
+
 ## Features
 ### 1. Live Data
 - The application regularly fetches Bitcoin prices from the [Coindesk API](https://api.coindesk.com/v1/bpi/currentprice.json).
