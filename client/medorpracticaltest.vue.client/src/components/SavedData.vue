@@ -27,7 +27,8 @@ async function fetchSavedData() {
           hour: "2-digit",
           minute: "2-digit",
           second: "2-digit",
-        }), // Format to include full date and time
+        }),
+        id: item.id,
         priceCZK: item.bitcoinPriceCZK,
         priceEUR: item.bitcoinPriceEUR,
         priceUSD: item.bitcoinPriceUSD,
@@ -46,12 +47,35 @@ function startEditing(index) {
   savedDataStore.savedData[index].isEditing = true;
 }
 
+async function updateNote(id, note) {
+  try {
+    const response = await fetch(
+      "https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/UpdateNote",
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id, note }),
+      }
+    );
+
+    if (!response.ok) {
+      console.error("Failed to update note");
+    }
+  } catch (error) {
+    console.error("Error updating note:", error);
+  }
+}
+
 function stopEditing(index) {
+  const note = savedDataStore.savedData[index].note;
   if (savedDataStore.savedData[index].note.length > maxNoteLength) {
     alert(`Note exceeds the maximum length of ${maxNoteLength} characters.`);
     return;
   }
   savedDataStore.savedData[index].isEditing = false;
+  updateNote(savedDataStore.savedData[index].id, note);
 }
 
 function checkNoteLength(index) {
@@ -94,9 +118,9 @@ onMounted(() => {
           <tbody>
             <tr v-for="(item, index) in savedData" :key="index">
               <td>{{ item.date }}</td>
-              <td>{{ item.priceCZK }}</td>
-              <td>{{ item.priceEUR }}</td>
-              <td>{{ item.priceUSD }}</td>
+              <td>{{ item.priceCZK }} CZK</td>
+              <td>{{ item.priceEUR }} EUR</td>
+              <td>{{ item.priceUSD }} USD</td>
               <td>
                 <div
                   v-if="!item.isEditing"

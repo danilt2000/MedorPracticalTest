@@ -1,6 +1,6 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import { savedDataStore } from '../store';
+import { ref, onMounted } from "vue";
+import { savedDataStore } from "../store";
 
 defineProps({
   msg: {
@@ -9,12 +9,12 @@ defineProps({
   },
 });
 
-const liveData = ref([]); 
+const liveData = ref([]);
 const isLoading = ref(true);
 
 function normalizeTimestamp(timestamp) {
   // Truncate milliseconds for comparison
-  return new Date(timestamp).toISOString().split('.')[0] + "Z";
+  return new Date(timestamp).toISOString().split(".")[0] + "Z";
 }
 
 async function fetchData() {
@@ -47,24 +47,26 @@ async function fetchData() {
     );
 
     const savedResult = await savedResponse.json();
-    const savedTimestamps = new Set(savedResult.map(item => normalizeTimestamp(item.timestamp)));
+    const savedTimestamps = new Set(
+      savedResult.map((item) => normalizeTimestamp(item.timestamp))
+    );
 
     // Map data and check if already saved
     liveData.value = historicalResult
       .map((item) => ({
-        time: new Date(item.timestamp).toLocaleString('en-US', {
-          hour: '2-digit',
-          minute: '2-digit',
+        time: new Date(item.timestamp).toLocaleString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
           hour12: true,
         }),
-        date: new Date(item.timestamp).toLocaleDateString('en-US'),
+        date: new Date(item.timestamp).toLocaleDateString("en-US"),
         priceCZK: `CZK ${item.bitcoinPriceCZK.toLocaleString()}`,
         priceEUR: `EUR ${item.bitcoinPriceEUR.toLocaleString()}`,
         priceUSD: `USD ${item.bitcoinPriceUSD.toLocaleString()}`,
         saved: savedTimestamps.has(normalizeTimestamp(item.timestamp)), // Check against normalized timestamp
-        timestamp: item.timestamp // Keep the original timestamp for future reference
+        timestamp: item.timestamp, // Keep the original timestamp for future reference
       }))
-      .reverse(); 
+      .reverse();
 
     isLoading.value = false;
   } catch (error) {
@@ -75,31 +77,47 @@ async function fetchData() {
 
 async function saveData(index) {
   const dataToSave = liveData.value[index];
-  
+
   // Combine date and time to create a valid timestamp
   const dateTimeString = `${dataToSave.date} ${dataToSave.time}`;
   const localTimestamp = new Date(dateTimeString);
 
-if (isNaN(localTimestamp.getTime())) {
-  console.error("Invalid date format:", dateTimeString);
-  return;
-}
+  if (isNaN(localTimestamp.getTime())) {
+    console.error("Invalid date format:", dateTimeString);
+    return;
+  }
 
-  const formattedTimestamp = `${localTimestamp.getFullYear()}-${(localTimestamp.getMonth() + 1).toString().padStart(2, '0')}-${localTimestamp.getDate().toString().padStart(2, '0')}T${localTimestamp.getHours().toString().padStart(2, '0')}:${localTimestamp.getMinutes().toString().padStart(2, '0')}:${localTimestamp.getSeconds().toString().padStart(2, '0')}.000`;
+  const formattedTimestamp = `${localTimestamp.getFullYear()}-${(
+    localTimestamp.getMonth() + 1
+  )
+    .toString()
+    .padStart(2, "0")}-${localTimestamp
+    .getDate()
+    .toString()
+    .padStart(2, "0")}T${localTimestamp
+    .getHours()
+    .toString()
+    .padStart(2, "0")}:${localTimestamp
+    .getMinutes()
+    .toString()
+    .padStart(2, "0")}:${localTimestamp
+    .getSeconds()
+    .toString()
+    .padStart(2, "0")}.000`;
 
   // Example payload for saving data
   const payload = {
-    bitcoinPriceUSD: parseFloat(dataToSave.priceUSD.replace(/[^\d.-]/g, '')),
-    bitcoinPriceEUR: parseFloat(dataToSave.priceEUR.replace(/[^\d.-]/g, '')),
-    bitcoinPriceCZK: parseFloat(dataToSave.priceCZK.replace(/[^\d.-]/g, '')),
+    bitcoinPriceUSD: parseFloat(dataToSave.priceUSD.replace(/[^\d.-]/g, "")),
+    bitcoinPriceEUR: parseFloat(dataToSave.priceEUR.replace(/[^\d.-]/g, "")),
+    bitcoinPriceCZK: parseFloat(dataToSave.priceCZK.replace(/[^\d.-]/g, "")),
     timestamp: formattedTimestamp, // Use the combined and parsed timestamp
-    note: ""
+    note: "",
   };
 
   // Send the request to save data
   try {
     const response = await fetch(
-      'https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/SaveLiveData',
+      "https://medorbackend.hepatico.ru/api/v1/BitcoinPrice/SaveLiveData",
       {
         method: "POST",
         headers: {
@@ -110,25 +128,30 @@ if (isNaN(localTimestamp.getTime())) {
     );
 
     if (response.ok) {
-
-        const formattedDate = new Date(dataToSave.timestamp).toLocaleString('en-US', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: true,
-  });
+      const idBitcoin = await response.json();
+      
+      const formattedDate = new Date(dataToSave.timestamp).toLocaleString(
+        "en-US",
+        {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+        }
+      );
 
       liveData.value[index].saved = true;
       savedDataStore.savedData.push({
-    date: formattedDate,
-    priceCZK: dataToSave.priceCZK,
-    priceEUR: dataToSave.priceEUR,
-    priceUSD: dataToSave.priceUSD,
-    note: ""
-  });
+        id: idBitcoin,
+        date: formattedDate,
+        priceCZK: dataToSave.priceCZK,
+        priceEUR: dataToSave.priceEUR,
+        priceUSD: dataToSave.priceUSD,
+        note: "",
+      });
     } else {
       console.error("Failed to save data");
     }
@@ -145,7 +168,7 @@ onMounted(() => {
 <template>
   <div class="greetings">
     <h1 class="green">{{ msg }}</h1>
-    <h3>🔴 Live Data - {{ liveData[0]?.date || 'Loading...' }}</h3>
+    <h3>🔴 Live Data - {{ liveData[0]?.date || "Loading..." }}</h3>
     <div class="live-data">
       <div v-if="isLoading" class="skeleton-container">
         <div class="skeleton-row" v-for="n in 15" :key="n">
@@ -154,7 +177,12 @@ onMounted(() => {
           <div class="skeleton-button"></div>
         </div>
       </div>
-      <div v-else class="data-row" v-for="(data, index) in liveData" :key="index">
+      <div
+        v-else
+        class="data-row"
+        v-for="(data, index) in liveData"
+        :key="index"
+      >
         <div class="data-info">
           <span class="data-time">{{ data.time }}</span>
           <span class="data-date">{{ data.date }}</span>
@@ -166,10 +194,10 @@ onMounted(() => {
         </div>
         <button
           class="save-button"
-          :class="{ 'saved': data.saved }"
+          :class="{ saved: data.saved }"
           @click="!data.saved && saveData(index)"
         >
-          {{ data.saved ? 'SAVED' : 'SAVE' }}
+          {{ data.saved ? "SAVED" : "SAVE" }}
         </button>
       </div>
     </div>
@@ -177,8 +205,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-
-
 .green {
   font-weight: 500;
   font-size: 2.6rem;
