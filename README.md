@@ -30,6 +30,106 @@ This project is a solution for the Medor practical test, aimed at implementing a
 ### 3. Bonus Task
 - The Bitcoin price is displayed both in a table and graph format, using a library suitable for graph rendering.
 
+## API Endpoints Documentation
+
+### 1. `GET /api/v1/BitcoinPrice/GetCurrentPrice`
+- **Description:** Retrieves the current Bitcoin price from an external data source.
+- **Response:** 
+  - `200 OK`: Returns the current Bitcoin price.
+- **Example Response:**
+    ```json
+    {
+        "bitcoinPriceUSD": 26812.53,
+        "bitcoinPriceEUR": 25214.78,
+        "bitcoinPriceCZK": 586400.95,
+        "timestamp": "2024-10-10T12:30:45Z"
+    }
+    ```
+
+### 2. `GET /api/v1/BitcoinPrice/GetHistoricalData`
+- **Description:** Retrieves historical Bitcoin price data starting from a specified date.
+- **Query Parameter:**
+  - `startDate` (required): The date from which to start retrieving historical data.
+- **Response:** 
+  - `200 OK`: Returns a list of historical Bitcoin price data.
+- **Example Response:**
+    ```json
+    [
+        {
+            "id": 1,
+            "bitcoinPriceUSD": 26750.12,
+            "bitcoinPriceEUR": 25123.55,
+            "bitcoinPriceCZK": 585000.00,
+            "timestamp": "2024-10-09T14:30:45Z",
+            "note": null
+        },
+        ...
+    ]
+    ```
+
+### 3. `GET /api/v1/BitcoinPrice/GetSavedData`
+- **Description:** Retrieves saved Bitcoin data that has been stored in the system.
+- **Response:** 
+  - `200 OK`: Returns a list of saved Bitcoin data records.
+- **Example Response:**
+    ```json
+    [
+        {
+            "id": 1,
+            "bitcoinPriceUSD": 26750.12,
+            "bitcoinPriceEUR": 25123.55,
+            "bitcoinPriceCZK": 585000.00,
+            "timestamp": "2024-10-09T14:30:45Z",
+            "note": "First entry"
+        },
+        ...
+    ]
+    ```
+
+### 4. `POST /api/v1/BitcoinPrice/SaveLiveData`
+- **Description:** Saves the current live Bitcoin price data to the system.
+- **Request Body:**
+    ```json
+    {
+        "bitcoinPriceUSD": 26812.53,
+        "bitcoinPriceEUR": 25214.78,
+        "bitcoinPriceCZK": 586400.95,
+        "timestamp": "2024-10-10T12:30:45Z",
+        "note": "Sample entry"
+    }
+    ```
+- **Response:**
+  - `200 OK`: Returns the ID of the saved Bitcoin data record.
+- **Example Response:**
+    ```json
+    {
+        "id": 5
+    }
+    ```
+
+### 5. `PATCH /api/v1/BitcoinPrice/UpdateNote`
+- **Description:** Updates a note associated with a saved Bitcoin data record.
+- **Request Body:**
+    ```json
+    {
+        "id": 5,
+        "note": "Updated note"
+    }
+    ```
+- **Response:**
+  - `200 OK`: Returns if the update was successful.
+
+### 6. `DELETE /api/v1/BitcoinPrice/DeleteSavedData`
+- **Description:** Deletes a saved Bitcoin data record from the system.
+- **Request Body:**
+    ```json
+    {
+        "id": 5
+    }
+    ```
+- **Response:**
+  - `200 OK`: Returns if the deletion was successful.
+
 ## Deployment
 - The application is hosted using Nginx for reverse proxy management and Docker for containerization. It ensures a scalable and isolated environment for the web and API components.
 - **API Documentation**: Swagger is used for API documentation and can be accessed [here](https://medorbackend.hepatico.ru/swagger/index.html).
